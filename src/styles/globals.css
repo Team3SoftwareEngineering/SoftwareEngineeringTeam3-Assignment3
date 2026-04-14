@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+@import './tokens.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  background-image:
+    radial-gradient(circle at 10% -20%, rgb(15 48 89 / 12%), transparent 44%),
+    radial-gradient(circle at 88% -10%, rgb(183 134 29 / 14%), transparent 38%),
+    linear-gradient(180deg, #f3f6fb 0%, #edf2f9 100%);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.panel-blur {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.surface-card {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 92%), rgb(255 255 255 / 86%)),
+    linear-gradient(130deg, rgb(217 231 247 / 26%), transparent 60%);
+}
+
+.map-shell {
+  background: linear-gradient(180deg, rgb(255 255 255 / 90%), rgb(255 255 255 / 80%));
+}
+
+.hero-banner {
+  background:
+    radial-gradient(circle at 22% 18%, rgb(183 134 29 / 34%), transparent 36%),
+    radial-gradient(circle at 82% 14%, rgb(33 112 218 / 24%), transparent 42%),
+    linear-gradient(135deg, #0f3059 0%, #234f84 42%, #6f87a5 100%);
+}
+
+.map-skeleton {
+  background:
+    linear-gradient(120deg, rgb(255 255 255 / 55%), rgb(255 255 255 / 22%)),
+    linear-gradient(0deg, rgb(15 45 82 / 6%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(15 45 82 / 6%) 1px, transparent 1px),
+    #dce3eb;
+  background-size:
+    auto,
+    34px 34px,
+    34px 34px,
+    auto;
+}
+
+.leaflet-container {
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  background: #d6dee9;
+}
+
+.leaflet-control-zoom {
+  border: 1px solid rgb(214 224 238 / 90%) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgb(15 48 89 / 18%) !important;
+}
+
+.leaflet-control-zoom a {
+  width: 32px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+  color: var(--color-text-primary) !important;
+  background: rgb(255 255 255 / 94%) !important;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.leaflet-control-zoom a:hover {
+  color: var(--color-accent-navy) !important;
+  background: var(--color-surface-muted) !important;
+}
+
+.leaflet-tooltip {
+  border: 1px solid rgb(217 231 247 / 88%) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 8px 18px rgb(15 48 89 / 20%) !important;
+  color: var(--color-text-primary) !important;
+  padding: 0.35rem 0.55rem !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+}
+
+.leaflet-tile {
+  filter: saturate(0.86) contrast(0.97) brightness(1.01);
+}
+
+.interactive-transition {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.sheet-content[data-state='open'] {
+  animation: sheet-in 220ms ease;
+}
+
+.sheet-content[data-state='closed'] {
+  animation: sheet-out 180ms ease;
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes sheet-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+}
+
+mark {
+  background: var(--color-accent-gold-soft);
+  color: inherit;
+  border-radius: 4px;
+  padding-inline: 0.125rem;
+}

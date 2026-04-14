@@ -1,0 +1,17 @@
+:root {
+  --color-bg: #f1f4f9;
+  --color-bg-elevated: #e8edf5;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f5f8fc;
+  --color-surface-strong: #e4ecf6;
+  --color-text-primary: #102338;
+  --color-text-secondary: #556982;
+  --color-accent-gold: #b7861d;
+  --color-accent-gold-soft: #f4e7c0;
+  --color-accent-navy: #0f3059;
+  --color-accent-navy-soft: #d9e7f7;
+  --color-success: #2f8f4e;
+  --color-warning: #b06a00;
+  --color-danger: #b13224;
+  --color-focus: #226fda;
+}
