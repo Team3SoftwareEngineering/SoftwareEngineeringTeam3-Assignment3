@@ -1,65 +1,72 @@
-# PNW Hammond Campus Map MVP
+# PNW Campus Map
 
-Interactive, modern campus map prototype focused on Purdue University Northwest's Hammond campus.
+Student-life campus map website for Purdue University Northwest. The repository is organized by team ownership so frontend, backend, database, QA, and DevOps/PM work can move independently with clear boundaries.
 
-## Purpose
-This project demonstrates a production-style front-end MVP for campus wayfinding and location discovery. It preserves core map interactions (search, filters, click-to-details) while using clearly labeled placeholder/demo data for classroom and portfolio presentation.
+## Team Structure
 
-## Scope
-- Hammond campus only
-- Westville intentionally excluded (future hook only)
-- 2D interactive map experience (no 3D scope)
+```text
+frontend/   React + TypeScript + Vite map UI
+backend/    Python Flask API skeleton for campus data and resource lookup
+database/   MySQL schema, seed data, and database documentation
+docs/       Architecture, API contracts, onboarding, and ownership docs
+docker/     Dockerfiles for app services
+scripts/    Local setup, dev, and test helper scripts
+```
 
-## Key Features
-- Search campus buildings/features and focus the map on selection
-- Category/layer filtering for ADA, parking, residence, emergency, community, campus life, and research
-- Clickable points and polygons with contextual details card
-- Responsive desktop sidebar + mobile control sheet
-- Clearly visible placeholder/demo data labeling in UI
+## Run Locally
 
-## Tech Stack
-- React + TypeScript + Vite
-- Tailwind CSS + tokenized design system
-- React Leaflet + Leaflet
-- Zustand for UI/map state
-- Fuse.js for fuzzy search
-- Vitest + Testing Library
+Frontend only:
 
-## Local Development
 ```bash
 npm install
 npm run dev
 ```
 
-## Validation Commands
+These root npm commands delegate to `frontend/`. You can also run the same commands from inside `frontend/` directly.
+
+Backend only:
+
 ```bash
-npm run lint
-npm run test
-npm run build
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+flask --app src.app:create_app run --host 0.0.0.0 --port 3000 --debug
 ```
 
-## Project Structure
-```text
-src/
-  app/
-  components/
-  data/hammond/
-  models/
-  state/
-  styles/
-  utils/
-tests/
+## Run With Docker
+
+Copy the example environment file, then start all services:
+
+```bash
+cp .env.example .env
+docker compose up --build
 ```
 
-## Placeholder Data Disclaimer
-All map features in this repository are placeholder/demo records unless explicitly verified from official sources. Coordinates, names, and descriptions are included to support prototype interactions and should not be treated as official campus GIS data.
+Default service URLs:
 
-## Current Limitations
-- No live backend/GIS integration
-- No route planning/navigation engine
-- No real-time parking occupancy
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:3000/api`
+- MySQL: `localhost:3306`
 
-## Future Improvements
-- Integrate official campus datasets
-- Add turn-by-turn routing and path accessibility overlays
-- Add end-to-end UI regression tests
+## Validation
+
+```bash
+./scripts/test.sh
+```
+
+The current implemented app is the frontend campus map MVP. Backend and database folders contain starter structure and contracts for future integration.
+
+## Folder Overview
+
+- `frontend/src/app`: app shell and bootstrapping
+- `frontend/src/components`: shared UI and map components
+- `frontend/src/features`: feature work areas for home, map, and directory chat
+- `frontend/src/services`: frontend API client code
+- `backend/src/routes`: API route definitions
+- `backend/src/controllers`: request handlers
+- `backend/src/services`: backend business logic and data lookup
+- `backend/src/integrations`: future map API and official school-resource integrations
+- `database/schema`: SQL schema migrations or starter schema files
+- `database/seed`: starter data for local development
+- `docs`: team process and technical contracts
