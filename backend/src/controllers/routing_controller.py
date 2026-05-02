@@ -4,6 +4,7 @@ from src.utils.validation import get_json_object, require_object
 
 def create_route():
     body = get_json_object()
+    # Route requests accept either raw coordinates or location ids for each waypoint.
     origin = require_object(body, "origin")
     destination = require_object(body, "destination")
     mode = body.get("mode", "walking")

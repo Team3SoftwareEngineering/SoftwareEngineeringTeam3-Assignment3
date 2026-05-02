@@ -14,6 +14,7 @@ def get_json_object():
 
 
 def parse_positive_int(value, field_name):
+    # Route ids and foreign keys should fail fast before any repository call.
     try:
         parsed = int(value)
     except (TypeError, ValueError):
@@ -29,6 +30,7 @@ def parse_optional_date(value, field_name="date"):
     if value in (None, ""):
         return None
 
+    # date.fromisoformat accepts compact dates, so enforce the public API format first.
     if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(value)):
         raise BadRequestError(f"{field_name} must use YYYY-MM-DD format")
 

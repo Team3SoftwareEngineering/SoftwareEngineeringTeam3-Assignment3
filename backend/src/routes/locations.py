@@ -4,6 +4,8 @@ from src.controllers.locations_controller import get_location_parking, list_loca
 
 
 locations_blueprint = Blueprint("locations", __name__)
+
+# The current schema names campus locations as buildings; this URL keeps the API generic.
 locations_blueprint.add_url_rule(
     "",
     view_func=list_locations,

@@ -13,6 +13,7 @@ class MockMapRoutingProvider:
     provider_name = "mock"
 
     def get_route(self, origin, destination, mode):
+        # The mock keeps local development and tests API-key-free and deterministic.
         distance_miles = haversine_miles(origin, destination)
         distance_meters = round(distance_miles * METERS_PER_MILE)
         duration_seconds = max(60, round(distance_miles * SECONDS_PER_MILE[mode]))

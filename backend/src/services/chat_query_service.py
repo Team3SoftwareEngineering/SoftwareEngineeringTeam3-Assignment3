@@ -12,6 +12,7 @@ class ChatQueryService:
 
         normalized = cleaned.lower()
 
+        # Ordered checks make ambiguous phrases predictable for the UI.
         if "register" in normalized:
             return self._registration_route(cleaned, normalized)
 

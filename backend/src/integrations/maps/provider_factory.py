@@ -6,6 +6,7 @@ from src.utils.errors import BadRequestError
 
 
 def create_map_provider():
+    # Mock is the safe default because it does not need secrets or network access.
     provider_name = (Config.MAP_PROVIDER or "mock").lower()
 
     if provider_name == "mock":

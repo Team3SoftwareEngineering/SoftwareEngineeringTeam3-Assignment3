@@ -13,6 +13,7 @@ class MapRoutingService:
         self.route_provider = route_provider or MockMapRoutingProvider()
 
     def get_route(self, origin_input, destination_input, mode="walking"):
+        # Normalize mode here so providers can focus on route calculation only.
         mode = mode or "walking"
         if not isinstance(mode, str):
             raise BadRequestError("mode must be walking, driving, or bicycling")
@@ -28,6 +29,7 @@ class MapRoutingService:
 
     def _resolve_waypoint(self, waypoint, field_name):
         if "location_id" in waypoint:
+            # Location ids let the frontend route from known campus buildings.
             location_id = parse_positive_int(
                 waypoint["location_id"],
                 f"{field_name}.location_id",

@@ -5,6 +5,7 @@ from src.utils.validation import get_optional_string, parse_positive_int
 
 
 def list_locations():
+    # Keep filtering optional so the same endpoint supports map load and search.
     name = get_optional_string(request.args.get("name"))
     locations = create_location_service().list_locations(name=name)
     return {"data": locations}

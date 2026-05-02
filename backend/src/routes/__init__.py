@@ -16,6 +16,7 @@ def health():
     return {"status": "ok"}
 
 
+# Feature blueprints stay grouped here so each route module owns only its URL slice.
 api_blueprint.register_blueprint(events_blueprint, url_prefix="/events")
 api_blueprint.register_blueprint(locations_blueprint, url_prefix="/locations")
 api_blueprint.register_blueprint(parking_blueprint, url_prefix="/parking-lots")

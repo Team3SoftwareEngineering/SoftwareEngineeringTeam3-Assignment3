@@ -5,6 +5,7 @@ EARTH_RADIUS_MILES = 3958.8
 
 
 def haversine_miles(origin, destination):
+    # Haversine is accurate enough for ranking nearby campus lots by straight-line distance.
     lat1 = radians(float(origin["latitude"]))
     lon1 = radians(float(origin["longitude"]))
     lat2 = radians(float(destination["latitude"]))

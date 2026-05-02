@@ -8,6 +8,8 @@ from src.controllers.events_controller import (
 
 
 events_blueprint = Blueprint("events", __name__)
+
+# Event routes cover discovery, detail lookup, and student registration workflow.
 events_blueprint.add_url_rule(
     "",
     view_func=list_events,

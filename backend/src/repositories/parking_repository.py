@@ -3,6 +3,7 @@ from src.repositories.database import fetch_all
 
 class ParkingRepository:
     def list_parking_lots(self, campus=None, permit_type=None):
+        # Repository filters mirror current schema columns only; availability is not modeled.
         query = """
             SELECT id, name, campus, latitude, longitude, permit_type
             FROM parking_lots

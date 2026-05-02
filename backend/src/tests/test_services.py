@@ -9,6 +9,7 @@ from src.services.registration_service import RegistrationService
 from src.utils.errors import BadRequestError, ConflictError, NotFoundError
 
 
+# Fake repositories keep service tests focused on business rules, not MySQL setup.
 class EventRepo:
     def __init__(self, event=None):
         self.event = event

@@ -27,6 +27,7 @@ class ParkingService:
         if location_id and event_id:
             raise BadRequestError("Use either location_id or event_id, not both")
 
+        # A location or event supplies the origin used to rank nearby parking lots.
         origin = None
         if location_id:
             origin = self.location_repository.find_by_id(location_id)
@@ -49,6 +50,7 @@ class ParkingService:
         return {
             "items": parking_lots,
             "meta": {
+                # The current schema has no availability table, so date is informational.
                 "availability_source": "not_available_in_current_schema",
                 "date": parking_date.isoformat() if parking_date else None,
                 "ranked_by_distance": origin is not None and has_coordinates(origin),

@@ -17,6 +17,7 @@ class RegistrationService:
         self.registration_repository = registration_repository or RegistrationRepository()
 
     def register_student_for_event(self, event_id, student_id):
+        # Check existence up front so API callers get specific 404s instead of DB errors.
         event = self.event_repository.find_by_id(event_id)
         if event is None:
             raise NotFoundError("Event not found")
@@ -25,6 +26,7 @@ class RegistrationService:
             raise NotFoundError("Student not found")
 
         try:
+            # The unique DB constraint is still the source of truth for duplicate safety.
             registration = self.registration_repository.create(
                 student_id=student_id,
                 event_id=event_id,

@@ -7,6 +7,7 @@ class ResourceService:
         self.resource_repository = resource_repository or ResourceRepository()
 
     def list_resources(self):
+        # Keep resources behind a service even though the current rules are simple.
         return self.resource_repository.list_resources()
 
     def get_resource_by_slug(self, slug):

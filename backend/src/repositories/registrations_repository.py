@@ -7,6 +7,7 @@ from src.repositories.errors import DuplicateRecordError
 class RegistrationRepository:
     def create(self, student_id, event_id):
         try:
+            # Insert is intentionally small; validation and existence checks live in services.
             registration_id = execute_insert(
                 """
                 INSERT INTO registrations (student_id, event_id)

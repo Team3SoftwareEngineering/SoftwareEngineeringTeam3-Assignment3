@@ -8,6 +8,7 @@ from src.services.resource_service import ResourceService
 from src.integrations.maps.provider_factory import create_map_provider
 
 
+# Factory functions keep controllers easy to monkeypatch in tests.
 def create_event_service():
     return EventService()
 

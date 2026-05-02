@@ -3,6 +3,7 @@ from src.repositories.database import fetch_all, fetch_one
 
 class EventRepository:
     def list_events(self, name=None, event_date=None):
+        # Join buildings here so API consumers receive event location context together.
         query = """
             SELECT
               e.id,
@@ -36,6 +37,7 @@ class EventRepository:
         return [self._to_event(row) for row in fetch_all(query, tuple(params))]
 
     def find_by_id(self, event_id):
+        # Detail lookup uses the same projection as list responses for consistency.
         row = fetch_one(
             """
             SELECT

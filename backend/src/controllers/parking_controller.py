@@ -9,6 +9,7 @@ from src.utils.validation import (
 
 
 def list_parking_lots():
+    # Query parameters describe lookup context; the service decides ranking rules.
     campus = get_optional_string(request.args.get("campus"))
     permit_type = get_optional_string(request.args.get("permit_type"))
     parking_date = parse_optional_date(request.args.get("date"))

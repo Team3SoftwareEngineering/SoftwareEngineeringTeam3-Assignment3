@@ -7,6 +7,7 @@ class EventService:
         self.event_repository = event_repository or EventRepository()
 
     def list_events(self, name=None, event_date=None):
+        # Search rules stay in the repository because they map directly to SQL filters.
         return self.event_repository.list_events(name=name, event_date=event_date)
 
     def get_event(self, event_id):

@@ -3,6 +3,7 @@ from src.repositories.database import fetch_all, fetch_one
 
 class LocationRepository:
     def list_locations(self, name=None):
+        # The database table is named buildings, but the API exposes them as locations.
         query = """
             SELECT id, name, campus, latitude, longitude, description
             FROM buildings

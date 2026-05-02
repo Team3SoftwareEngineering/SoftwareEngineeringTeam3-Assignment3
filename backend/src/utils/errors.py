@@ -23,6 +23,7 @@ class ConflictError(ApiError):
 
 
 def register_error_handlers(app):
+    # Central handlers keep every endpoint on the same JSON error contract.
     @app.errorhandler(ApiError)
     def handle_api_error(error):
         return jsonify({"error": error.message}), error.status_code

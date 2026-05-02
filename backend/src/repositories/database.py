@@ -27,6 +27,7 @@ def fetch_all(query, params=None):
         cursor = connection.cursor(dictionary=True)
         try:
             cursor.execute(query, params or ())
+            # Convert DB-native values before Flask JSON serialization sees them.
             return [_serialize_row(row) for row in cursor.fetchall()]
         finally:
             cursor.close()

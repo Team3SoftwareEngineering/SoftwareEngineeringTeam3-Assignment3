@@ -7,6 +7,7 @@ def make_client():
     return app.test_client()
 
 
+# Route tests monkeypatch services so they validate HTTP behavior without MySQL.
 def test_events_endpoint_filters_by_name_and_date(monkeypatch):
     from src.controllers import events_controller
 

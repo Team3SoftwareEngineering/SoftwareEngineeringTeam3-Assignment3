@@ -3,6 +3,7 @@ from src.repositories.database import fetch_all, fetch_one
 
 class ResourceRepository:
     def list_resources(self):
+        # Resource links come from MySQL so directory and chat features stay consistent.
         rows = fetch_all(
             """
             SELECT slug, label, category, official_url
