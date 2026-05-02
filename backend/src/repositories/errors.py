@@ -1,0 +1,2 @@
+class DuplicateRecordError(Exception):
+    pass
