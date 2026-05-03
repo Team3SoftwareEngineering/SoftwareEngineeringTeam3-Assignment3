@@ -1,23 +1,18 @@
-RESOURCES = [
-    {
-        "slug": "advising",
-        "label": "Academic Advising",
-        "url": "https://www.pnw.edu/academic-advising/",
-        "category": "student-support",
-    },
-    {
-        "slug": "registrar",
-        "label": "Registrar",
-        "url": "https://www.pnw.edu/registrar/",
-        "category": "student-support",
-    },
-]
+from src.repositories.resource_repository import ResourceRepository
+from src.utils.errors import NotFoundError
 
 
-def get_resources():
-    return RESOURCES
+class ResourceService:
+    def __init__(self, resource_repository=None):
+        self.resource_repository = resource_repository or ResourceRepository()
 
+    def list_resources(self):
+        # Keep resources behind a service even though the current rules are simple.
+        return self.resource_repository.list_resources()
 
-def find_resource_by_slug(slug):
-    return next((resource for resource in RESOURCES if resource["slug"] == slug), None)
+    def get_resource_by_slug(self, slug):
+        resource = self.resource_repository.find_by_slug(slug)
+        if resource is None:
+            raise NotFoundError("Resource not found")
+        return resource
 

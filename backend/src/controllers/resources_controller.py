@@ -1,15 +1,12 @@
-from src.services.resource_service import find_resource_by_slug, get_resources
+from src.services.service_factory import create_resource_service
 
 
 def list_resources():
-    return {"data": get_resources()}
+    # Resource links are DB-backed so chat and directory UI share the same source.
+    return {"data": create_resource_service().list_resources()}
 
 
 def get_resource_by_slug(slug):
-    resource = find_resource_by_slug(slug)
-
-    if resource is None:
-        return {"error": "Resource not found"}, 404
-
+    resource = create_resource_service().get_resource_by_slug(slug)
     return {"data": resource}
 

@@ -14,4 +14,5 @@ class Config:
     DB_USER = os.getenv("DB_USER", "pnw_app")
     DB_PASSWORD = os.getenv("DB_PASSWORD", "")
     MAP_API_KEY = os.getenv("MAP_API_KEY", "")
+    MAP_PROVIDER = os.getenv("MAP_PROVIDER", "mock")
 
