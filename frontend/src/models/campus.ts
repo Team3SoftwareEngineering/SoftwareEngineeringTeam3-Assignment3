@@ -10,6 +10,7 @@ export type CategoryId =
   | 'community'
   | 'campusLife'
   | 'research'
+  | 'building'
 
 export type GeometryType = 'point' | 'polygon'
 

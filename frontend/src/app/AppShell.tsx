@@ -3,6 +3,8 @@ import { X } from 'lucide-react'
 import { SidebarContent } from '../components/sidebar/SidebarContent'
 import { TopNav } from '../components/header/TopNav'
 import { CampusMap } from '../components/map/CampusMap'
+// import CampusMapEditor from "../components/map/CampusMapEditor"
+
 import { useMapStore } from '../state/useMapStore'
 
 export function AppShell() {
