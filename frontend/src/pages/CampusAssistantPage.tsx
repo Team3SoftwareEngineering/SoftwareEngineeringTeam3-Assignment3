@@ -845,18 +845,25 @@ export function CampusAssistantPage({
                 void handleSend(query)
               }}
             >
-              <div className="flex items-center gap-3 rounded-control border border-slate-300 bg-white px-4 py-3 shadow-panelSm focus-within:border-accent-navy/60 focus-within:ring-2 focus-within:ring-accent-navy/10">
-                <input
+              <div className="flex items-stretch gap-2 rounded-control border border-slate-300 bg-white p-2 shadow-panelSm focus-within:border-accent-navy/60 focus-within:ring-2 focus-within:ring-accent-navy/10">
+                <textarea
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' && !event.shiftKey) {
+                      event.preventDefault()
+                      void handleSend(query)
+                    }
+                  }}
                   placeholder="Ask about events, parking, locations, or resources..."
-                  className="min-w-0 flex-1 border-0 bg-transparent text-sm outline-none placeholder:text-slate-400"
+                  rows={2}
+                  className="h-14 min-w-0 flex-1 resize-none border-0 bg-transparent px-1 py-1 text-sm leading-5 outline-none placeholder:text-slate-400"
                 />
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="interactive-transition inline-flex h-11 w-11 items-center justify-center rounded-full bg-accent-gold text-white shadow-panelSm hover:-translate-y-0.5 hover:bg-[#a77814] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="interactive-transition inline-flex h-14 w-12 shrink-0 items-center justify-center rounded-control bg-accent-gold text-white shadow-panelSm hover:-translate-y-0.5 hover:bg-[#a77814] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <Send className="h-4 w-4" />
                 </button>
