@@ -7,6 +7,7 @@ interface TopNavProps {
 
 export function TopNav({ onOpenMobileDrawer }: TopNavProps) {
   const selectedFeatureId = useMapStore((state) => state.selectedFeatureId)
+  const features = useMapStore((state) => state.features)
 
   return (
     <header className="border-b border-slate-300/70 bg-white/72 shadow-panelSm panel-blur">
@@ -31,36 +32,24 @@ export function TopNav({ onOpenMobileDrawer }: TopNavProps) {
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-accent-gold/40 bg-accent-gold-soft/70 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[#5d4308]">
                   <Layers3 className="h-3.5 w-3.5" />
-                  Hammond MVP
+                  Hammond Map
                 </span>
                 <p className="hidden truncate text-xs text-text-secondary sm:block">
-                  Interactive campus map prototype
+                  Interactive campus navigation
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        <nav
-          aria-label="Campus switcher"
-          className="hidden items-center gap-1 rounded-control border border-slate-300 bg-white/80 p-1 shadow-softInset sm:flex"
-        >
-          <button
-            type="button"
-            className="interactive-transition rounded-[8px] border border-accent-gold bg-accent-gold px-3.5 py-1.5 text-sm font-semibold text-white shadow-panelSm"
-            aria-current="page"
-          >
+        <div className="hidden items-center gap-2 rounded-control border border-slate-300 bg-white/85 px-3 py-2 shadow-softInset sm:flex">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-accent-gold/40 bg-accent-gold-soft px-2 py-0.5 text-[11px] font-semibold text-[#5d4308]">
             Hammond Campus
-          </button>
-          <button
-            type="button"
-            className="rounded-[8px] border border-transparent bg-transparent px-3.5 py-1.5 text-sm font-semibold text-text-secondary"
-            disabled
-            title="Westville campus is out of scope for this Hammond MVP."
-          >
-            Westville (Future)
-          </button>
-        </nav>
+          </span>
+          <span className="text-xs font-semibold text-text-secondary">
+            {features.length} mapped locations
+          </span>
+        </div>
 
         <div className="flex items-center gap-2 rounded-control border border-slate-300 bg-white/88 px-3 py-2 text-xs font-semibold text-text-secondary shadow-panelSm">
           <Compass className="h-4 w-4 text-accent-navy" />

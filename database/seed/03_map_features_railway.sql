@@ -1,0 +1,47 @@
+﻿-- =========================
+-- MAP FEATURES
+-- =========================
+INSERT INTO map_features (
+    feature_uuid,
+    campus_id,
+    name,
+    category,
+    geometry_type,
+    coordinates_json,
+    short_description,
+    tags_json,
+    accessibility_info,
+    address,
+    location_uuid,
+    is_placeholder_data
+) VALUES
+('hammond-bioscience-01', 'hammond', 'Nils K. Nelson Bioscience Innovation Building', 'research', 'point', '[41.58345835140126,-87.47409403324129]', 'Research facility marker used for map interactions.', '["bioscience","innovation","labs","research"]', NULL, NULL, NULL, 0),
+('hammond-student-union-01', 'hammond', 'Student Union & Commons', 'campusLife', 'point', '[41.58426486482241,-87.47443199157715]', 'Social and student services anchor point.', '["student union","commons","services"]', NULL, NULL, NULL, 0),
+('hammond-library-01', 'hammond', 'Library & Learning Commons', 'community', 'point', '[41.584220727532546,-87.47404575347902]', 'Library marker for search and details.', '["library","study","learning commons"]', NULL, NULL, NULL, 0),
+('hammond-engineering-01', 'hammond', 'Engineering and Sciences Hall', 'research', 'point', '[41.58536828726313,-87.47497379779816]', 'Academic science and engineering facility.', '["engineering","science","classrooms"]', NULL, NULL, NULL, 0),
+('hammond-fitness-01', 'hammond', 'Fitness & Recreation Center', 'campusLife', 'point', '[41.580224171519305,-87.47414231300354]', 'Recreation and fitness point.', '["fitness","recreation","wellness"]', NULL, NULL, NULL, 0),
+('hammond-health-01', 'hammond', 'Health and Wellness Center', 'community', 'point', '[41.58023620971002,-87.47375071048738]', 'Health support location marker.', '["health","wellness","services"]', NULL, NULL, NULL, 0),
+('hammond-food-pantry-01', 'hammond', 'Basic Needs Hub & Food Pantry', 'community', 'point', '[41.5841444903245,-87.47430324554445]', 'Basic-needs support location.', '["food pantry","basic needs","support"]', NULL, NULL, NULL, 0),
+('hammond-police-01', 'hammond', 'Campus Police - Founder''s Plaza Area', 'emergency', 'point', '[41.58688094847325,-87.47343420982361]', 'Emergency and campus safety point positioned near the Founder''s Plaza reference area.', '["police","safety","emergency","founders plaza"]', NULL, NULL, NULL, 0),
+('hammond-bluephone-north-01', 'hammond', 'Blue Light Phone North Quad', 'emergency', 'point', '[41.58651983893782,-87.47461974620819]', 'Emergency blue-light location.', '["blue light","emergency call","north quad"]', NULL, NULL, NULL, 0),
+('hammond-bluephone-south-01', 'hammond', 'Blue Light Phone South Walk', 'emergency', 'point', '[41.58240706007715,-87.4749255180359]', 'Emergency blue-light location.', '["blue light","emergency call","south walk"]', NULL, NULL, NULL, 0),
+('hammond-residence-north-01', 'hammond', 'Parking Garage', 'parking', 'polygon', '[[41.58569329173243,-87.47257590293886],[41.58569329173243,-87.47171223163606],[41.5848908085941,-87.47169077396394],[41.58488679615336,-87.47255444526674]]', 'Parking garage polygon.', '["housing","residence","north"]', NULL, NULL, NULL, 0),
+('hammond-residence-south-01', 'hammond', 'Student Housing South', 'residence', 'polygon', '[[41.580882255986346,-87.46955573558809],[41.58062143062789,-87.46956646442415],[41.580617417921836,-87.46992051601411],[41.58058531626444,-87.47074127197267],[41.58024423516925,-87.47075200080873],[41.579854999247935,-87.47075736522676],[41.57981487169995,-87.47206091880798],[41.57978678240154,-87.47329473495485],[41.58085015446062,-87.47327864170074]]', 'Residential zone polygon.', '["housing","residence","south"]', NULL, NULL, NULL, 0),
+('hammond-parking-a-01', 'hammond', 'Parking Lot A (Open)', 'parking', 'polygon', '[[41.58773155406353,-87.47461974620819],[41.58773957859121,-87.47360587120058],[41.5865358882934,-87.47374534606934],[41.585765514725686,-87.47376143932344],[41.58573742801569,-87.47459828853609]]', 'Open parking polygon.', '["parking","open","lot a"]', NULL, NULL, NULL, 0),
+('hammond-parking-b-01', 'hammond', 'Parking Lot B (Permit)', 'parking', 'polygon', '[[41.58655594998224,-87.47360587120058],[41.58656397465605,-87.47320353984834],[41.58643959210013,-87.47271537780762],[41.58638341925439,-87.47221648693085],[41.58575748995264,-87.47221648693085],[41.585685266950435,-87.47267782688142],[41.58534822520524,-87.47268319129945],[41.58534822520524,-87.47309625148775],[41.585444523026275,-87.47341275215149],[41.58581366334297,-87.47361123561859]]', 'Permit parking polygon.', '["parking","permit","lot b"]', NULL, NULL, NULL, 0),
+('hammond-parking-c-01', 'hammond', 'Parking Lot C (Visitor)', 'parking', 'polygon', '[[41.583185498809144,-87.47484505176546],[41.583209574084215,-87.47325181961061],[41.58202586242992,-87.47325181961061],[41.58204191290256,-87.47476458549501]]', 'Visitor parking polygon.', '["parking","visitor","lot c"]', NULL, NULL, NULL, 0),
+('hammond-parking-loop-01', 'hammond', 'Visitor Drop-off Loop', 'parking', 'point', '[41.585701316513465,-87.47583210468294]', 'Short-term pickup and drop-off point.', '["drop-off","visitor","loop"]', NULL, NULL, NULL, 0),
+('hammond-ada-entrance-su-01', 'hammond', 'Accessible Entrance - Student Union', 'ada', 'point', '[41.58444542614853,-87.47445881366731]', 'Accessible entrance point.', '["accessible entrance","student union"]', 'Ramp-based entry and automatic door.', NULL, NULL, 0),
+('hammond-ada-parking-nibib-01', 'hammond', 'Accessible Parking - Bioscience Building', 'ada', 'point', '[41.58269997884557,-87.47387409210206]', 'Accessible parking location.', '["accessible parking","bioscience"]', 'Location and access notes.', NULL, NULL, 0),
+('hammond-ada-elevator-library-01', 'hammond', 'Elevator Access - Library', 'ada', 'point', '[41.584441413680075,-87.47460901737213]', 'Elevator access marker.', '["elevator","library","ada"]', 'Elevator metadata available.', NULL, NULL, 0),
+('hammond-community-center-01', 'hammond', 'Community Engagement Office', 'community', 'point', '[41.5843,-87.47428]', 'Office marker for community support.', '["community","engagement","office"]', NULL, NULL, NULL, 0),
+('hammond-event-lawn-01', 'hammond', 'Campus Event Lawn', 'campusLife', 'polygon', '[[41.58498710709733,-87.47482895851135],[41.58497506979227,-87.47351467609407],[41.58460191222273,-87.47352540493013],[41.58461796205504,-87.47482895851135]]', 'Outdoor activity and event zone.', '["events","lawn","campus life"]', NULL, NULL, NULL, 0),
+('hammond-nils-bioscience-building', 'hammond', 'N.I.L.S Bioscience Building', 'building', 'polygon', '[[41.58363380504417,-87.47460992729877],[41.58333367409344,-87.47460992729877],[41.58333367409344,-87.47353011414303],[41.58363380504417,-87.47353011414303]]', 'Primary building for the biology and nursing programs.', '["building","bioscience","nils"]', NULL, NULL, NULL, 0),
+('hammond-anderson-building', 'hammond', 'Edward D. Anderson Building', 'building', 'polygon', '[[41.588008035078445,-87.47573857938649],[41.58732139743782,-87.47573857938647],[41.58732139743782,-87.47496389938169],[41.588008035078445,-87.4749638993817]]', 'Building housing additional engineering classrooms.', '["building","bioscience","nils"]', NULL, NULL, NULL, 0),
+('hammond-classroom-office-01', 'hammond', 'Classroom Office Building', 'building', 'polygon', '[[41.58725522314205,-87.47580279659566],[41.58656639650579,-87.47580279659566],[41.58656639650579,-87.47490090373468],[41.58725522314205,-87.47490090373468],[41.58725522314205,-87.47580279659566]]', 'Primary classroom and faculty office building.', '["classroom","offices","academic"]', NULL, NULL, NULL, 0),
+('hammond-powers-building', 'hammond', 'Powers Building', 'building', 'polygon', '[[41.58651396147317,-87.475668214954],[41.58592767123724,-87.475668214954],[41.58592767123724,-87.47514768639945],[41.58651396147317,-87.47514768639945]]', 'Academic building housing classrooms and offices.', '["building","academic","powers"]', NULL, NULL, NULL, 0),
+('hammond-potter-building', 'hammond', 'Potter Building', 'building', 'polygon', '[[41.58649036428662,-87.47509335549161],[41.58606820567647,-87.47509335549161],[41.58606820567647,-87.4746834822806],[41.58649036428662,-87.4746834822806]]', 'Academic building with classrooms and faculty offices.', '["building","academic","potter"]', NULL, NULL, NULL, 0),
+('hammond-gyte-building', 'hammond', 'Gyte Building', 'building', 'polygon', '[[41.585587681072724,-87.4741731791286],[41.585587681072724,-87.47568483769392],[41.58501770315928,-87.47568483769392],[41.58501770315928,-87.4741731791286]]', 'Academic building with classrooms and offices.', '["building","academic","gyte"]', NULL, NULL, NULL, 0),
+('hammond-porter-building-01', 'hammond', 'Porter Building', 'building', 'polygon', '[[41.585416331286865,-87.47362415498705],[41.58500392668836,-87.47362415498705],[41.58500392668836,-87.47267452477152],[41.585416331286865,-87.47267452477152],[41.585416331286865,-87.47362415498705]]', 'Academic building used for classrooms and faculty offices.', '["building","academic","classrooms","offices"]', NULL, NULL, NULL, 0),
+('hammond-lawshe-building-01', 'hammond', 'Lawshe Hall', 'building', 'polygon', '[[41.58327222345628,-87.47565325199446],[41.58258710423647,-87.47565325199446],[41.58258710423647,-87.47513577185245],[41.58327222345628,-87.47513577185245],[41.58327222345628,-87.47565325199446]]', 'Academic building housing classrooms and administrative offices.', '["building","academic","classrooms","offices"]', NULL, NULL, NULL, 0);
+

@@ -22,14 +22,15 @@ class RegistrationService:
         if event is None:
             raise NotFoundError("Event not found")
 
-        if not self.student_repository.exists(student_id):
+        student = self.student_repository.find_by_student_id(student_id)
+        if student is None:
             raise NotFoundError("Student not found")
 
         try:
             # The unique DB constraint is still the source of truth for duplicate safety.
             registration = self.registration_repository.create(
-                student_id=student_id,
-                event_id=event_id,
+                student_uuid=student["student_uuid"],
+                event_uuid=event_id,
             )
         except DuplicateRecordError as error:
             raise ConflictError("Student is already registered for this event") from error

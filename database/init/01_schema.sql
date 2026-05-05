@@ -81,6 +81,26 @@ CREATE TABLE campus_locations (
 );
 
 -- =========================
+-- MAP FEATURES
+-- =========================
+CREATE TABLE map_features (
+    feature_uuid VARCHAR(120) PRIMARY KEY,
+    campus_id VARCHAR(50) NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    geometry_type ENUM('point', 'polygon') NOT NULL,
+    coordinates_json JSON NOT NULL,
+    short_description TEXT NOT NULL,
+    tags_json JSON NOT NULL,
+    accessibility_info TEXT,
+    address VARCHAR(255),
+    location_uuid CHAR(36),
+    is_placeholder_data BOOLEAN NOT NULL DEFAULT FALSE,
+
+    FOREIGN KEY (location_uuid) REFERENCES campus_locations(location_uuid)
+);
+
+-- =========================
 -- EVENTS
 -- =========================
 CREATE TABLE events (

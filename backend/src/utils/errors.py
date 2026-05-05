@@ -22,6 +22,10 @@ class ConflictError(ApiError):
     status_code = 409
 
 
+class ServiceUnavailableError(ApiError):
+    status_code = 503
+
+
 def register_error_handlers(app):
     # Central handlers keep every endpoint on the same JSON error contract.
     @app.errorhandler(ApiError)

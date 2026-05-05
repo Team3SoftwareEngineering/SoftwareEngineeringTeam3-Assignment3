@@ -3,10 +3,10 @@ from src.repositories.database import fetch_all, fetch_one
 
 class LocationRepository:
     def list_locations(self, name=None):
-        # The database table is named buildings, but the API exposes them as locations.
+        # The schema stores campus location records in campus_locations.
         query = """
-            SELECT id, name, campus, latitude, longitude, description
-            FROM buildings
+            SELECT location_uuid, name, address, latitude, longitude, description
+            FROM campus_locations
         """
         params = []
 
@@ -14,15 +14,15 @@ class LocationRepository:
             query += " WHERE LOWER(name) LIKE LOWER(%s)"
             params.append(f"%{name}%")
 
-        query += " ORDER BY campus ASC, name ASC"
+        query += " ORDER BY name ASC"
         return [self._to_location(row) for row in fetch_all(query, tuple(params))]
 
     def find_by_id(self, location_id):
         row = fetch_one(
             """
-            SELECT id, name, campus, latitude, longitude, description
-            FROM buildings
-            WHERE id = %s
+            SELECT location_uuid, name, address, latitude, longitude, description
+            FROM campus_locations
+            WHERE location_uuid = %s
             """,
             (location_id,),
         )
@@ -30,10 +30,20 @@ class LocationRepository:
 
     def _to_location(self, row):
         return {
-            "id": row["id"],
+            "id": row["location_uuid"],
             "name": row["name"],
-            "campus": row["campus"],
+            "campus": self._extract_campus_name(row["address"]),
             "latitude": row["latitude"],
             "longitude": row["longitude"],
             "description": row["description"],
+            "address": row["address"],
         }
+
+    def _extract_campus_name(self, address):
+        if not address:
+            return "Unknown"
+
+        parts = [part.strip() for part in address.split(",") if part.strip()]
+        if len(parts) >= 2:
+            return parts[1]
+        return parts[0]

@@ -1,79 +1,95 @@
 # Frontend
 
-React + TypeScript + Vite workspace for the Purdue Northwest campus map frontend.
-
-## Owned By
-
-Frontend team owns UI, pages, components, hooks, styles, assets, frontend services, and frontend tests in this folder.
+React + TypeScript + Vite frontend for the PNW Hammond Campus Map application.
 
 ## Purpose
-This project demonstrates a production-style front-end MVP for campus wayfinding and location discovery. It preserves core map interactions (search, filters, click-to-details) while using clearly labeled placeholder/demo data for classroom and portfolio presentation.
 
-## Scope
-- Hammond campus only
-- Westville intentionally excluded (future hook only)
-- 2D interactive map experience (no 3D scope)
+The frontend provides the user-facing experience for campus wayfinding, event discovery, department resources, route planning, and campus assistant workflows.
 
 ## Key Features
-- Search campus buildings/features and focus the map on selection
-- Category/layer filtering for ADA, parking, residence, emergency, community, campus life, and research
-- Clickable points and polygons with contextual details card
-- Responsive desktop sidebar + mobile control sheet
-- Clearly visible placeholder/demo data labeling in UI
+
+- Interactive Hammond campus map with points, polygons, category filters, and feature details.
+- Campus feature search using Fuse.js and stored Hammond campus feature data.
+- Route planner with destination prefill from map features and event detail pages.
+- Events page with event search, event details, registration counts, and duplicate-registration protection.
+- Department hub with backend resource links and local fallback resources.
+- Campus assistant page for events, parking, locations, registrations, and resources.
+- Responsive desktop sidebar, collapsible panels, mobile sheet controls, and draggable navigation widget where appropriate.
 
 ## Tech Stack
-- React + TypeScript + Vite
-- Tailwind CSS + tokenized design system
-- React Leaflet + Leaflet
-- Zustand for UI/map state
-- Fuse.js for fuzzy search
-- Vitest + Testing Library
 
-## Local Development
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Leaflet and Leaflet
+- Zustand
+- Fuse.js
+- Vitest and Testing Library
+
+## Run Locally
+
+From the repository root:
+
 ```bash
 npm install
 npm run dev
 ```
 
-The app defaults to `http://localhost:5173`.
+Or from this folder:
 
-## Validation Commands
+```bash
+npm install
+npm run dev
+```
+
+The frontend runs at `http://localhost:5173` by default.
+
+## Environment
+
+The frontend reads the backend API URL from:
+
+```env
+VITE_API_BASE_URL=http://localhost:3000/api
+```
+
+The variable can be set in the root `.env` file or in a frontend deployment environment.
+
+## Validation
+
 ```bash
 npm run lint
 npm run test
 npm run build
 ```
 
-## Project Structure
+## Source Structure
+
 ```text
 src/
-  app/
-  components/
-  features/
-    home/
-    map/
-    directory-chat/
-  pages/
-  services/
-  hooks/
-  assets/
-  data/hammond/
-  models/
-  state/
-  styles/
-  utils/
-tests/
+├── app/             Application shell and top-level view switching
+├── components/      Shared UI, map, sidebar, details, and controls
+├── data/            Hammond campus data and assistant prompt metadata
+├── features/        Feature-area documentation
+├── models/          TypeScript domain models
+├── pages/           Auth, events, and campus assistant pages
+├── services/        API clients and frontend business logic
+├── state/           Zustand state stores
+├── styles/          Global CSS and design tokens
+├── test/            Test setup
+├── types/           Local type declarations
+└── utils/           Search, filter, and map helpers
 ```
 
-## Placeholder Data Disclaimer
-All map features in this repository are placeholder/demo records unless explicitly verified from official sources. Coordinates, names, and descriptions are included to support prototype interactions and should not be treated as official campus GIS data.
+## Backend Integration
 
-## Current Limitations
-- No live backend/GIS integration
-- No route planning/navigation engine
-- No real-time parking occupancy
+The frontend integrates with these backend areas:
 
-## Future Improvements
-- Integrate official campus datasets
-- Add turn-by-turn routing and path accessibility overlays
-- Add end-to-end UI regression tests
+- `GET /api/events`
+- `GET /api/resources`
+- `GET /api/map-features`
+- `POST /api/events/:event_id/registrations`
+- `POST /api/routes`
+- `POST /api/chat/query`
+
+Selected UI areas also include curated local fallback data so the application remains usable during local development if the backend is unavailable.

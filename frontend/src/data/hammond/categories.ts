@@ -71,7 +71,7 @@ export const hammondCategories: CategoryConfig[] = [
     label: 'Buildings',
     description: 'Campus buildings and structures',
     defaultEnabled: true,
-    colorToken: 'var(--color-gold)',
+    colorToken: 'var(--color-accent-gold)',
     icon: Home,
   }
 ]

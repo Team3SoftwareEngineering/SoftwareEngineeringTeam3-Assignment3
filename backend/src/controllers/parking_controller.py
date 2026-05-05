@@ -3,8 +3,8 @@ from flask import request
 from src.services.service_factory import create_parking_service
 from src.utils.validation import (
     get_optional_string,
+    parse_identifier,
     parse_optional_date,
-    parse_positive_int,
 )
 
 
@@ -16,11 +16,13 @@ def list_parking_lots():
 
     location_id = None
     if request.args.get("location_id") not in (None, ""):
-        location_id = parse_positive_int(request.args.get("location_id"), "location_id")
+        parsed_location_id = parse_identifier(request.args.get("location_id"), "location_id")
+        location_id = int(parsed_location_id) if parsed_location_id.isdigit() else parsed_location_id
 
     event_id = None
     if request.args.get("event_id") not in (None, ""):
-        event_id = parse_positive_int(request.args.get("event_id"), "event_id")
+        parsed_event_id = parse_identifier(request.args.get("event_id"), "event_id")
+        event_id = int(parsed_event_id) if parsed_event_id.isdigit() else parsed_event_id
 
     result = create_parking_service().list_parking_lots(
         campus=campus,

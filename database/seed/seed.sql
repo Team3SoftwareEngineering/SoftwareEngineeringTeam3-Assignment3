@@ -93,8 +93,8 @@ INSERT INTO parking_lots (
     location_uuid,
     lot_type
 ) VALUES
-('P10', 'North Visitor Parking', NULL, 'L101', 'parking lot'),
-('P11', '169th Street Parking Garage', NULL, 'L100', 'parking garage');
+('P10', 'North Visitor Parking', 320, 'L101', 'parking lot'),
+('P11', '169th Street Parking Garage', 550, 'L100', 'parking garage');
 
 INSERT INTO resource_links (
     resource_uuid,

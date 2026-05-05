@@ -27,6 +27,9 @@ export interface CampusFeature {
   shortDescription: string
   tags: string[]
   accessibilityInfo?: string
+  address?: string
+  locationId?: string
+  dataSource?: 'backend' | 'local' | 'external'
   isPlaceholderData: boolean
 }
 
@@ -45,5 +48,4 @@ export interface CampusConfig {
   center: PointCoordinates
   defaultZoom: number
   initialBounds: [PointCoordinates, PointCoordinates]
-  maxBounds: [PointCoordinates, PointCoordinates]
 }

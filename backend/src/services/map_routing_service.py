@@ -1,7 +1,7 @@
 from src.integrations.maps.mock_provider import MockMapRoutingProvider
 from src.repositories.locations_repository import LocationRepository
 from src.utils.errors import BadRequestError, NotFoundError
-from src.utils.validation import parse_positive_int
+from src.utils.validation import parse_identifier
 
 
 VALID_ROUTE_MODES = {"walking", "driving", "bicycling"}
@@ -30,11 +30,12 @@ class MapRoutingService:
     def _resolve_waypoint(self, waypoint, field_name):
         if "location_id" in waypoint:
             # Location ids let the frontend route from known campus buildings.
-            location_id = parse_positive_int(
+            location_id = parse_identifier(
                 waypoint["location_id"],
                 f"{field_name}.location_id",
             )
-            location = self.location_repository.find_by_id(location_id)
+            lookup_id = int(location_id) if location_id.isdigit() else location_id
+            location = self.location_repository.find_by_id(lookup_id)
             if location is None:
                 raise NotFoundError(f"{field_name} location not found")
             if location.get("latitude") is None or location.get("longitude") is None:

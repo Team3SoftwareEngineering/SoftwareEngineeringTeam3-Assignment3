@@ -1,11 +1,14 @@
-import { CircleHelp, MapPin, Sparkles } from 'lucide-react'
+import { CircleHelp, MapPin, Navigation, Sparkles } from 'lucide-react'
 import { hammondCategories } from '../../data/hammond/categories'
-import { hammondFeatures } from '../../data/hammond/features'
 import { useMapStore } from '../../state/useMapStore'
+import { getFeatureAnchor } from '../../utils/map'
 
 export function FeatureDetailsCard() {
   const selectedFeatureId = useMapStore((state) => state.selectedFeatureId)
-  const feature = hammondFeatures.find((entry) => entry.id === selectedFeatureId) ?? null
+  const features = useMapStore((state) => state.features)
+  const setRouteDestination = useMapStore((state) => state.setRouteDestination)
+  const requestFeatureFocus = useMapStore((state) => state.requestFeatureFocus)
+  const feature = features.find((entry) => entry.id === selectedFeatureId) ?? null
   const category = feature
     ? hammondCategories.find((entry) => entry.id === feature.category) ?? null
     : null
@@ -41,6 +44,24 @@ export function FeatureDetailsCard() {
       </h2>
       <p className="mt-2 text-sm leading-relaxed text-text-secondary">{feature.shortDescription}</p>
 
+      <button
+        type="button"
+        onClick={() => {
+          const point = getFeatureAnchor(feature)
+          setRouteDestination({
+            label: feature.name,
+            latitude: point[0],
+            longitude: point[1],
+            source: 'feature',
+          })
+          requestFeatureFocus(feature.id)
+        }}
+        className="interactive-transition mt-3 inline-flex items-center gap-2 rounded-control border border-accent-navy/35 bg-accent-navy-soft px-3 py-2 text-xs font-semibold text-accent-navy hover:-translate-y-0.5 hover:border-accent-navy/55"
+      >
+        <Navigation className="h-3.5 w-3.5" />
+        Directions to this location
+      </button>
+
       <div className="mt-3 flex flex-wrap gap-2.5">
         <span className="rounded-full border border-accent-gold/40 bg-accent-gold-soft/80 px-2.5 py-1 text-xs font-semibold text-[#67490d]">
           {category?.label ?? feature.category}
@@ -64,7 +85,7 @@ export function FeatureDetailsCard() {
       {feature.isPlaceholderData ? (
         <p className="mt-3 inline-flex items-start gap-1.5 rounded-control border border-warning/40 bg-warning/10 px-2.5 py-1.5 text-xs leading-relaxed text-text-secondary">
           <Sparkles className="mt-0.5 h-3.5 w-3.5 text-warning" />
-          Demo/placeholder entry. Not an official campus record.
+          Unverified entry. Confirm details with official campus resources.
         </p>
       ) : null}
     </aside>

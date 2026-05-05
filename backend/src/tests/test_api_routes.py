@@ -148,6 +148,27 @@ def test_locations_parking_endpoint(monkeypatch):
     assert response.get_json() == {"data": [{"id": 3, "name": "Lot A"}]}
 
 
+def test_map_features_endpoint_supports_filters(monkeypatch):
+    from src.controllers import map_features_controller
+
+    class FakeMapFeatureService:
+        def list_map_features(self, campus=None, category=None):
+            assert campus == "hammond"
+            assert category == "parking"
+            return [{"id": "f1", "name": "Parking Lot A"}]
+
+    monkeypatch.setattr(
+        map_features_controller,
+        "create_map_feature_service",
+        lambda: FakeMapFeatureService(),
+    )
+
+    response = make_client().get("/api/map-features?campus=hammond&category=parking")
+
+    assert response.status_code == 200
+    assert response.get_json() == {"data": [{"id": "f1", "name": "Parking Lot A"}]}
+
+
 def test_parking_lots_endpoint_returns_meta(monkeypatch):
     from src.controllers import parking_controller
 

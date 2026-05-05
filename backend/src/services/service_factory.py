@@ -1,6 +1,7 @@
 from src.services.chat_query_service import ChatQueryService
 from src.services.event_service import EventService
 from src.services.location_service import LocationService
+from src.services.map_feature_service import MapFeatureService
 from src.services.map_routing_service import MapRoutingService
 from src.services.parking_service import ParkingService
 from src.services.registration_service import RegistrationService
@@ -19,6 +20,10 @@ def create_registration_service():
 
 def create_location_service():
     return LocationService()
+
+
+def create_map_feature_service():
+    return MapFeatureService()
 
 
 def create_parking_service():

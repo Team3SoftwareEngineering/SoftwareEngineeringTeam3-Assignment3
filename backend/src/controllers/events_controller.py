@@ -4,6 +4,7 @@ from src.services.service_factory import create_event_service, create_registrati
 from src.utils.validation import (
     get_json_object,
     get_optional_string,
+    parse_identifier,
     parse_optional_date,
     parse_positive_int,
 )
@@ -18,18 +19,20 @@ def list_events():
 
 
 def get_event(event_id):
-    parsed_event_id = parse_positive_int(event_id, "event_id")
-    event = create_event_service().get_event(parsed_event_id)
+    parsed_event_id = parse_identifier(event_id, "event_id")
+    normalized_event_id = int(parsed_event_id) if parsed_event_id.isdigit() else parsed_event_id
+    event = create_event_service().get_event(normalized_event_id)
     return {"data": event}
 
 
 def create_event_registration(event_id):
-    parsed_event_id = parse_positive_int(event_id, "event_id")
+    parsed_event_id = parse_identifier(event_id, "event_id")
+    normalized_event_id = int(parsed_event_id) if parsed_event_id.isdigit() else parsed_event_id
     body = get_json_object()
     # Registration intentionally requires an existing student record in this slice.
     student_id = parse_positive_int(body.get("student_id"), "student_id")
     registration = create_registration_service().register_student_for_event(
-        event_id=parsed_event_id,
+        event_id=normalized_event_id,
         student_id=student_id,
     )
     return {"data": registration}, 201

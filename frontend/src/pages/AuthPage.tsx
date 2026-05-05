@@ -138,12 +138,12 @@ export function AuthPage({ onAuthenticated, onContinueAsGuest }: AuthPageProps) 
               </p>
 
               <h1 className="font-heading text-4xl font-bold leading-tight">
-                Register for campus events and find your way around Hammond.
+                Register for campus events and find your way around PNW Hammond campus.
               </h1>
 
               <p className="max-w-xl text-base leading-7 text-white/84">
-                This login and signup prototype matches the database design with accounts,
-                students, staff, addresses, and event registration support.
+                After signing up, students can explore the campus map, register for events, and access resources. 
+                Staff can create events, manage registrations, and share important information. 
               </p>
             </div>
 
@@ -161,10 +161,11 @@ export function AuthPage({ onAuthenticated, onContinueAsGuest }: AuthPageProps) 
               <div className="rounded-card border border-white/20 bg-white/12 p-4">
                 <div className="flex items-center gap-3">
                   <BookOpenCheck className="h-5 w-5 text-accent-gold-soft" />
-                  <p className="font-semibold">Database-aligned fields</p>
+                  <p className="font-semibold">Secure database data handling</p>
                 </div>
                 <p className="mt-2 text-sm text-white/78">
-                  Signup collects account, name, ID, role, city, and state data.
+                  Signup collects account, name, ID, role, city, and state data. 
+                  We hold this data securely and do not share it with third parties.
                 </p>
               </div>
             </div>

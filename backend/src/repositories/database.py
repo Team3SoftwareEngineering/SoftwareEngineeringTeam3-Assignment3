@@ -1,21 +1,35 @@
 from contextlib import contextmanager
 from datetime import date, datetime
 from decimal import Decimal
-
+import os
 import mysql.connector
 
-from src.config.env import Config
+from src.utils.errors import ServiceUnavailableError
 
 
 @contextmanager
 def get_connection():
-    connection = mysql.connector.connect(
-        host=Config.DB_HOST,
-        port=Config.DB_PORT,
-        database=Config.DB_NAME,
-        user=Config.DB_USER,
-        password=Config.DB_PASSWORD,
-    )
+    db_host = os.getenv("DB_HOST")
+    db_port = int(os.getenv("DB_PORT", "3306"))
+    db_user = os.getenv("DB_USER")
+    db_password = os.getenv("DB_PASSWORD")
+    db_name = os.getenv("DB_NAME")
+
+    try:
+        connection = mysql.connector.connect(
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_name,
+        )
+    except mysql.connector.Error as error:
+        message = (
+            f"Database connection failed to {db_host}:{db_port}. "
+            "Verify DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, and DB_NAME."
+        )
+        raise ServiceUnavailableError(message) from error
+
     try:
         yield connection
     finally:
@@ -27,7 +41,6 @@ def fetch_all(query, params=None):
         cursor = connection.cursor(dictionary=True)
         try:
             cursor.execute(query, params or ())
-            # Convert DB-native values before Flask JSON serialization sees them.
             return [_serialize_row(row) for row in cursor.fetchall()]
         finally:
             cursor.close()

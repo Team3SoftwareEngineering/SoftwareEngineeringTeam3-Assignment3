@@ -2,39 +2,64 @@
 
 ## Overview
 
-The project is split into frontend, backend, and database workspaces with Docker orchestration at the repository root.
+The project is a full-stack campus wayfinding application split into frontend, backend, and database workspaces. Docker Compose can run the complete local stack, while each workspace can also be developed independently.
 
 ## Frontend
 
-`frontend/` contains the existing React + TypeScript + Vite campus map MVP. It currently renders local demo campus data and supports map search, category filtering, feature selection, and responsive map controls.
+`frontend/` contains the React + TypeScript + Vite application. It owns the interactive map, event pages, campus assistant UI, routing panel, authentication screens, and resource hub.
 
-Expected feature areas:
-- `frontend/src/features/home`
-- `frontend/src/features/map`
-- `frontend/src/features/directory-chat`
+Primary responsibilities:
+
+- Render campus map features from backend or curated local fallback data.
+- Maintain map, routing, sidebar, and detail-panel state through Zustand.
+- Search campus features and events with responsive UI feedback.
+- Call backend endpoints through the frontend service layer.
+- Preserve a usable local-development experience when optional services are offline.
 
 ## Backend
 
-`backend/` contains a Python Flask API skeleton. It exposes starter endpoints under `/api` and defines clear folders for routes, controllers, services, models, schemas, utilities, and external integrations.
+`backend/` contains the Flask API. It uses route modules, controllers, services, and repositories to keep request handling separate from business logic and database access.
 
-Expected responsibilities:
-- Serve campus location, parking, event, registration, and resource-link data
-- Provide resource lookup or redirect behavior for official PNW pages
-- Integrate with map APIs and routing APIs later
-- Read and write MySQL data once the database contract stabilizes
+Primary responsibilities:
+
+- Serve events, registrations, map features, locations, parking, resources, routes, and chat query classifications.
+- Validate request parameters and return consistent API responses.
+- Read and write MySQL records through repository classes.
+- Keep third-party or external integration code isolated under `backend/src/integrations`.
 
 ## Database
 
-`database/` contains MySQL schema and seed files. Docker uses the official MySQL image and mounts schema/seed SQL files for first-run initialization.
+`database/` contains the MySQL schema and seed files used for local Docker startup and deployment imports.
 
 Core entities:
-- Students
-- Events
-- Registrations
-- Buildings and campus locations
-- Parking lots
-- Official resource links
 
-## External Integrations
+- students
+- events
+- registrations
+- campus locations
+- parking lots
+- map features
+- resource links
 
-Future external integrations should be isolated under `backend/src/integrations` so API routes do not depend directly on vendor SDKs or third-party response formats.
+## Request Flow
+
+```text
+Browser
+  -> React page/component
+  -> frontend service function
+  -> Flask route
+  -> controller
+  -> service
+  -> repository
+  -> MySQL
+```
+
+For map and resource continuity, the frontend can fall back to curated local data when the backend is unreachable.
+
+## Deployment Shape
+
+A production-style deployment uses three services:
+
+- Frontend static site built from `frontend/dist`
+- Backend Flask web service served by gunicorn
+- MySQL database initialized with schema and seed data

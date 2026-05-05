@@ -28,15 +28,20 @@ class StudentRepo:
     def exists(self, _student_id):
         return self._exists
 
+    def find_by_student_id(self, student_id):
+        if not self._exists:
+            return None
+        return {"student_uuid": "S-1", "student_id": student_id}
+
 
 class RegistrationRepo:
     def __init__(self, duplicate=False):
         self.duplicate = duplicate
 
-    def create(self, student_id, event_id):
+    def create(self, student_uuid, event_uuid):
         if self.duplicate:
             raise DuplicateRecordError("duplicate")
-        return {"id": 10, "student_id": student_id, "event_id": event_id}
+        return {"id": 10, "student_uuid": student_uuid, "event_id": event_uuid}
 
 
 class LocationRepo:
@@ -93,7 +98,7 @@ def test_registration_requires_existing_event_and_student():
 
     registration = service.register_student_for_event(event_id=1, student_id=5)
 
-    assert registration == {"id": 10, "student_id": 5, "event_id": 1}
+    assert registration == {"id": 10, "student_uuid": "S-1", "event_id": 1}
 
 
 def test_registration_maps_missing_and_duplicate_failures():
@@ -183,15 +188,33 @@ def test_chat_query_service_routes_common_queries_deterministically():
     service = ChatQueryService()
 
     events = service.route_query("events today")
+    tomorrow_events = service.route_query("events tomorrow")
     parking = service.route_query("parking near gym")
     registration = service.route_query("register me for career fair")
+    rsvp = service.route_query("rsvp for welcome night")
+    class_registration = service.route_query("register for classes")
+    directions = service.route_query("directions to Fitness and Recreation Center")
     location = service.route_query("where is Student Union Library Building?")
+    resource = service.route_query("financial aid resources")
+    career_resource = service.route_query("career center")
+    location_hint = service.route_query("classroom office building")
 
     assert events["intent"] == "event_lookup"
     assert "date" in events["target"]["params"]
+    assert tomorrow_events["target"]["params"]["date"] != events["target"]["params"]["date"]
     assert parking["intent"] == "parking_lookup"
     assert parking["target"]["params"]["location_name"] == "gym"
+    assert parking["confidence"] == "high"
     assert registration["intent"] == "event_registration"
     assert registration["parameters"]["event_name"] == "career fair"
+    assert rsvp["intent"] == "event_registration"
+    assert rsvp["parameters"]["event_name"] == "welcome night"
+    assert class_registration["intent"] == "resource_lookup"
+    assert class_registration["target"]["params"]["search"] == "registrar"
+    assert directions["intent"] == "location_lookup"
+    assert directions["target"]["params"]["name"] == "Fitness and Recreation Center"
     assert location["intent"] == "location_lookup"
     assert location["target"]["params"]["name"] == "Student Union Library Building"
+    assert resource["intent"] == "resource_lookup"
+    assert career_resource["intent"] == "resource_lookup"
+    assert location_hint["intent"] == "location_lookup"

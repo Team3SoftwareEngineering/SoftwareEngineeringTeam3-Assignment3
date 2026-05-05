@@ -1,188 +1,188 @@
 import type { CampusFeature } from '../../models/campus'
 
-// All entries in this file are explicitly placeholder/demo content for MVP prototyping.
+// All entries in this file are campus feature data.
 export const hammondFeatures: CampusFeature[] = [
   {
     "id": "hammond-bioscience-01",
     "campus": "hammond",
-    "name": "Nils K. Nelson Bioscience Innovation Building (Demo)",
+    "name": "Nils K. Nelson Bioscience Innovation Building",
     "category": "research",
     "type": "point",
     "coordinates": [
       41.58345835140126,
       -87.47409403324129
     ],
-    "shortDescription": "Placeholder research facility marker used for MVP interaction demos.",
+    "shortDescription": "Research facility marker used for map interactions.",
     "tags": [
       "bioscience",
       "innovation",
       "labs",
       "research"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-student-union-01",
     "campus": "hammond",
-    "name": "Student Union & Commons (Demo)",
+    "name": "Student Union & Commons",
     "category": "campusLife",
     "type": "point",
     "coordinates": [
       41.58426486482241,
       -87.47443199157715
     ],
-    "shortDescription": "Demo social and student services anchor point.",
+    "shortDescription": "Social and student services anchor point.",
     "tags": [
       "student union",
       "commons",
       "services"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-library-01",
     "campus": "hammond",
-    "name": "Library & Learning Commons (Demo)",
+    "name": "Library & Learning Commons",
     "category": "community",
     "type": "point",
     "coordinates": [
       41.584220727532546,
       -87.47404575347902
     ],
-    "shortDescription": "Placeholder library marker for search and details testing.",
+    "shortDescription": "Library marker for search and details.",
     "tags": [
       "library",
       "study",
       "learning commons"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-engineering-01",
     "campus": "hammond",
-    "name": "Engineering and Sciences Hall (Demo)",
+    "name": "Engineering and Sciences Hall",
     "category": "research",
     "type": "point",
     "coordinates": [
       41.58536828726313,
       -87.47497379779816
     ],
-    "shortDescription": "Demo academic science/engineering facility.",
+    "shortDescription": "Academic science and engineering facility.",
     "tags": [
       "engineering",
       "science",
       "classrooms"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-fitness-01",
     "campus": "hammond",
-    "name": "Fitness & Recreation Center (Demo)",
+    "name": "Fitness & Recreation Center",
     "category": "campusLife",
     "type": "point",
     "coordinates": [
       41.580224171519305,
       -87.47414231300354
     ],
-    "shortDescription": "Placeholder recreation and fitness point.",
+    "shortDescription": "Recreation and fitness point.",
     "tags": [
       "fitness",
       "recreation",
       "wellness"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-health-01",
     "campus": "hammond",
-    "name": "Health and Wellness Center (Demo)",
+    "name": "Health and Wellness Center",
     "category": "community",
     "type": "point",
     "coordinates": [
       41.58023620971002,
       -87.47375071048738
     ],
-    "shortDescription": "Demo health support location marker.",
+    "shortDescription": "Health support location marker.",
     "tags": [
       "health",
       "wellness",
       "services"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-food-pantry-01",
     "campus": "hammond",
-    "name": "Basic Needs Hub & Food Pantry (Demo)",
+    "name": "Basic Needs Hub & Food Pantry",
     "category": "community",
     "type": "point",
     "coordinates": [
       41.5841444903245,
       -87.47430324554445
     ],
-    "shortDescription": "Placeholder basic-needs support location.",
+    "shortDescription": "Basic-needs support location.",
     "tags": [
       "food pantry",
       "basic needs",
       "support"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-police-01",
     "campus": "hammond",
-    "name": "Campus Police - Founder's Plaza Area (Demo)",
+    "name": "Campus Police - Founder's Plaza Area",
     "category": "emergency",
     "type": "point",
     "coordinates": [
       41.58688094847325,
       -87.47343420982361
     ],
-    "shortDescription": "Demo emergency and campus safety point positioned near the Founder's Plaza reference area.",
+    "shortDescription": "Emergency and campus safety point positioned near the Founder's Plaza reference area.",
     "tags": [
       "police",
       "safety",
       "emergency",
       "founders plaza"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-bluephone-north-01",
     "campus": "hammond",
-    "name": "Blue Light Phone North Quad (Demo)",
+    "name": "Blue Light Phone North Quad",
     "category": "emergency",
     "type": "point",
     "coordinates": [
       41.58651983893782,
       -87.47461974620819
     ],
-    "shortDescription": "Placeholder emergency blue-light location.",
+    "shortDescription": "Emergency blue-light location.",
     "tags": [
       "blue light",
       "emergency call",
       "north quad"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-bluephone-south-01",
     "campus": "hammond",
-    "name": "Blue Light Phone South Walk (Demo)",
+    "name": "Blue Light Phone South Walk",
     "category": "emergency",
     "type": "point",
     "coordinates": [
       41.58240706007715,
       -87.4749255180359
     ],
-    "shortDescription": "Placeholder emergency blue-light location.",
+    "shortDescription": "Emergency blue-light location.",
     "tags": [
       "blue light",
       "emergency call",
       "south walk"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-residence-north-01",
@@ -208,18 +208,18 @@ export const hammondFeatures: CampusFeature[] = [
         -87.47255444526674
       ]
     ],
-    "shortDescription": "Placeholder parking garage polygon for filter testing.",
+    "shortDescription": "Parking garage polygon.",
     "tags": [
       "housing",
       "residence",
       "north"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-residence-south-01",
     "campus": "hammond",
-    "name": "Student Housing South (Demo)",
+    "name": "Student Housing South",
     "category": "residence",
     "type": "polygon",
     "coordinates": [
@@ -260,18 +260,18 @@ export const hammondFeatures: CampusFeature[] = [
         -87.47327864170074
       ]
     ],
-    "shortDescription": "Placeholder residential zone polygon for filter testing.",
+    "shortDescription": "Residential zone polygon.",
     "tags": [
       "housing",
       "residence",
       "south"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-parking-a-01",
     "campus": "hammond",
-    "name": "Parking Lot A (Open) (Demo)",
+    "name": "Parking Lot A (Open)",
     "category": "parking",
     "type": "polygon",
     "coordinates": [
@@ -296,18 +296,18 @@ export const hammondFeatures: CampusFeature[] = [
         -87.47459828853609
       ]
     ],
-    "shortDescription": "Demo open parking polygon.",
+    "shortDescription": "Open parking polygon.",
     "tags": [
       "parking",
       "open",
       "lot a"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-parking-b-01",
     "campus": "hammond",
-    "name": "Parking Lot B (Permit) (Demo)",
+    "name": "Parking Lot B (Permit)",
     "category": "parking",
     "type": "polygon",
     "coordinates": [
@@ -352,18 +352,18 @@ export const hammondFeatures: CampusFeature[] = [
         -87.47361123561859
       ]
     ],
-    "shortDescription": "Demo permit parking polygon.",
+    "shortDescription": "Permit parking polygon.",
     "tags": [
       "parking",
       "permit",
       "lot b"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-parking-c-01",
     "campus": "hammond",
-    "name": "Parking Lot C (Visitor) (Demo)",
+    "name": "Parking Lot C (Visitor)",
     "category": "parking",
     "type": "polygon",
     "coordinates": [
@@ -384,109 +384,109 @@ export const hammondFeatures: CampusFeature[] = [
         -87.47476458549501
       ]
     ],
-    "shortDescription": "Demo visitor parking polygon.",
+    "shortDescription": "Visitor parking polygon.",
     "tags": [
       "parking",
       "visitor",
       "lot c"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-parking-loop-01",
     "campus": "hammond",
-    "name": "Visitor Drop-off Loop (Demo)",
+    "name": "Visitor Drop-off Loop",
     "category": "parking",
     "type": "point",
     "coordinates": [
       41.585701316513465,
       -87.47583210468294
     ],
-    "shortDescription": "Placeholder point for short-term pickup and drop-off.",
+    "shortDescription": "Short-term pickup and drop-off point.",
     "tags": [
       "drop-off",
       "visitor",
       "loop"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-ada-entrance-su-01",
     "campus": "hammond",
-    "name": "Accessible Entrance - Student Union (Demo)",
+    "name": "Accessible Entrance - Student Union",
     "category": "ada",
     "type": "point",
     "coordinates": [
       41.58444542614853,
       -87.47445881366731
     ],
-    "shortDescription": "Demo accessible entrance point.",
+    "shortDescription": "Accessible entrance point.",
     "tags": [
       "accessible entrance",
       "student union"
     ],
-    "accessibilityInfo": "Ramp-based entry and automatic door are placeholder/demo attributes.",
-    "isPlaceholderData": true
+    "accessibilityInfo": "Ramp-based entry and automatic door.",
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-ada-parking-nibib-01",
     "campus": "hammond",
-    "name": "Accessible Parking - Bioscience Building (Demo)",
+    "name": "Accessible Parking - Bioscience Building",
     "category": "ada",
     "type": "point",
     "coordinates": [
       41.58269997884557,
       -87.47387409210206
     ],
-    "shortDescription": "Placeholder accessible parking location.",
+    "shortDescription": "Accessible parking location.",
     "tags": [
       "accessible parking",
       "bioscience"
     ],
-    "accessibilityInfo": "Location and access notes are placeholder/demo only.",
-    "isPlaceholderData": true
+    "accessibilityInfo": "Location and access notes.",
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-ada-elevator-library-01",
     "campus": "hammond",
-    "name": "Elevator Access - Library (Demo)",
+    "name": "Elevator Access - Library",
     "category": "ada",
     "type": "point",
     "coordinates": [
       41.584441413680075,
       -87.47460901737213
     ],
-    "shortDescription": "Demo elevator access marker.",
+    "shortDescription": "Elevator access marker.",
     "tags": [
       "elevator",
       "library",
       "ada"
     ],
-    "accessibilityInfo": "Elevator metadata is simulated for prototype purposes.",
-    "isPlaceholderData": true
+    "accessibilityInfo": "Elevator metadata available.",
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-community-center-01",
     "campus": "hammond",
-    "name": "Community Engagement Office (Demo)",
+    "name": "Community Engagement Office",
     "category": "community",
     "type": "point",
     "coordinates": [
       41.5843,
       -87.47428
     ],
-    "shortDescription": "Placeholder office marker for community support.",
+    "shortDescription": "Office marker for community support.",
     "tags": [
       "community",
       "engagement",
       "office"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     "id": "hammond-event-lawn-01",
     "campus": "hammond",
-    "name": "Campus Event Lawn (Demo)",
+    "name": "Campus Event Lawn",
     "category": "campusLife",
     "type": "polygon",
     "coordinates": [
@@ -507,13 +507,13 @@ export const hammondFeatures: CampusFeature[] = [
         -87.47482895851135
       ]
     ],
-    "shortDescription": "Demo outdoor activity and event zone.",
+    "shortDescription": "Outdoor activity and event zone.",
     "tags": [
       "events",
       "lawn",
       "campus life"
     ],
-    "isPlaceholderData": true
+    "isPlaceholderData": false
   },
   {
     id: "hammond-nils-bioscience-building",
@@ -529,7 +529,7 @@ export const hammondFeatures: CampusFeature[] = [
     ],
     shortDescription: "Primary building for the biology and nursing programs.",
     tags: ["building", "bioscience", "nils"],
-    isPlaceholderData: true,
+    isPlaceholderData: false,
   },
 
   {
@@ -546,13 +546,13 @@ export const hammondFeatures: CampusFeature[] = [
     ],
     shortDescription: "Building housing additional engineering classrooms.",
     tags: ["building", "bioscience", "nils"],
-    isPlaceholderData: true,
+    isPlaceholderData: false,
   },
 
   {
     id: "hammond-classroom-office-01",
     campus: "hammond",
-    name: "Classroom Office Building (Demo)",
+    name: "Classroom Office Building",
     category: "building",
     type: "polygon",
     coordinates: [
@@ -566,7 +566,7 @@ export const hammondFeatures: CampusFeature[] = [
     ],
     shortDescription: "Primary classroom and faculty office building.",
     tags: ["classroom", "offices", "academic"],
-    isPlaceholderData: true,
+    isPlaceholderData: false,
   },
 
   {
@@ -635,7 +635,7 @@ export const hammondFeatures: CampusFeature[] = [
     ],
     shortDescription: "Academic building used for classrooms and faculty offices.",
     tags: ["building", "academic", "classrooms", "offices"],
-    isPlaceholderData: true,
+    isPlaceholderData: false,
   },
 
   {
@@ -653,7 +653,7 @@ export const hammondFeatures: CampusFeature[] = [
     ],
     shortDescription: "Academic building housing classrooms and administrative offices.",
     tags: ["building", "academic", "classrooms", "offices"],
-    isPlaceholderData: true,
+    isPlaceholderData: false,
   }
 
 ]

@@ -37,7 +37,7 @@ const seedAccounts: DemoAccount[] = [
     role: 'student',
     firstName: 'Demo',
     lastName: 'Student',
-    idNumber: '1001',
+    idNumber: '156777',
     city: 'Hammond',
     state: 'IN',
     createdAt: new Date().toISOString(),

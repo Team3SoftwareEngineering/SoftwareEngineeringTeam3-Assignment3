@@ -26,6 +26,17 @@ def parse_positive_int(value, field_name):
     return parsed
 
 
+def parse_identifier(value, field_name):
+    cleaned = get_optional_string(value)
+    if cleaned is None:
+        raise BadRequestError(f"{field_name} is required")
+
+    if not re.fullmatch(r"[A-Za-z0-9_-]+", cleaned):
+        raise BadRequestError(f"{field_name} must use letters, numbers, hyphens, or underscores")
+
+    return cleaned
+
+
 def parse_optional_date(value, field_name="date"):
     if value in (None, ""):
         return None
