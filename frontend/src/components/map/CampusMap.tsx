@@ -37,6 +37,7 @@ export function CampusMap() {
     )
   }
 
+
   return (
     <section className="map-shell relative h-full w-full overflow-hidden rounded-panel border border-slate-300/75 shadow-panelLg">
       <MapContainer
