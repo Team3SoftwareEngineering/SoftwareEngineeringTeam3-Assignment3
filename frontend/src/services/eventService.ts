@@ -5,13 +5,14 @@ import type {
   EventCategory,
   EventRegistration,
 } from "../models/event";
-import type { DemoAccount } from "../models/auth";
+import type { PublicDemoAccount } from "../models/auth";
 import { seedCampusEvents } from "../data/events";
 import { apiGet, apiPost } from "./apiClient";
 
 const CREATED_EVENTS_STORAGE_KEY = "pnw_created_events";
 const EVENT_REGISTRATIONS_STORAGE_KEY = "pnw_event_registrations";
 const GUEST_REGISTRANT_STORAGE_KEY = "pnw_guest_registrant_key";
+let fallbackIdCounter = 0;
 
 interface BackendEventLocation {
   id: string;
@@ -46,12 +47,30 @@ function canUseStorage() {
   }
 }
 
-function createUuid(prefix: string) {
-  if (typeof crypto !== "undefined" && crypto.randomUUID) {
-    return crypto.randomUUID();
+function createSecureRandomHex(byteLength = 16) {
+  if (
+    typeof crypto !== "undefined" &&
+    typeof crypto.getRandomValues === "function"
+  ) {
+    const bytes = new Uint8Array(byteLength);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join(
+      "",
+    );
   }
 
-  return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  fallbackIdCounter += 1;
+  return `${Date.now().toString(16)}${fallbackIdCounter
+    .toString(16)
+    .padStart(4, "0")}`;
+}
+
+function createUuid(prefix: string) {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return `${prefix}-${crypto.randomUUID()}`;
+  }
+
+  return `${prefix}-${createSecureRandomHex()}`;
 }
 
 function getStoredCreatedEvents(): CampusEvent[] {
@@ -112,7 +131,7 @@ function getGuestRegistrantKey() {
 
 function registrationBelongsToUser(
   registration: EventRegistration,
-  account: DemoAccount | null,
+  account: PublicDemoAccount | null,
 ) {
   if (account) {
     return (
@@ -130,7 +149,7 @@ function registrationBelongsToUser(
 
 export function hasJoinedCampusEvent(
   eventId: string,
-  account: DemoAccount | null,
+  account: PublicDemoAccount | null,
 ): boolean {
   return getStoredRegistrations().some(
     (registration) =>
@@ -141,7 +160,7 @@ export function hasJoinedCampusEvent(
 
 function saveRegistrationIfMissing(
   registration: EventRegistration,
-  account: DemoAccount | null,
+  account: PublicDemoAccount | null,
 ) {
   const registrations = getStoredRegistrations();
   const alreadyStored = registrations.some(
@@ -315,7 +334,7 @@ export function createCampusEvent(
 
 function registerLocalEvent(
   eventId: string,
-  account: DemoAccount | null,
+  account: PublicDemoAccount | null,
 ): EventActionResult {
   const events = [...getFallbackEvents(), ...getStoredCreatedEvents()];
   const event = events.find((campusEvent) => campusEvent.eventId === eventId);
@@ -357,7 +376,7 @@ function registerLocalEvent(
 
 export async function joinCampusEvent(
   eventId: string,
-  account: DemoAccount | null,
+  account: PublicDemoAccount | null,
 ): Promise<EventActionResult> {
   if (isLocalEvent(eventId)) {
     return registerLocalEvent(eventId, account);

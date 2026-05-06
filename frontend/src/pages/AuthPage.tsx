@@ -10,13 +10,13 @@ import {
   ShieldCheck,
   UserPlus,
 } from 'lucide-react'
-import type { AccountRole, DemoAccount, SignupPayload } from '../models/auth'
+import type { AccountRole, PublicDemoAccount, SignupPayload } from '../models/auth'
 import { loginUser, signupUser } from '../services/authService'
 
 type AuthMode = 'login' | 'signup'
 
 interface AuthPageProps {
-  onAuthenticated: (account: DemoAccount) => void
+  onAuthenticated: (account: PublicDemoAccount) => void
   onContinueAsGuest: () => void
 }
 interface AuthStatus {

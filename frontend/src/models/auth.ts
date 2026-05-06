@@ -14,6 +14,8 @@ export interface DemoAccount {
   createdAt: string
 }
 
+export type PublicDemoAccount = Omit<DemoAccount, 'passwordHash'>
+
 export interface LoginPayload {
   username: string
   password: string
@@ -36,5 +38,5 @@ export interface SignupPayload {
 export interface AuthResult {
   ok: boolean
   message: string
-  account?: DemoAccount
+  account?: PublicDemoAccount
 }

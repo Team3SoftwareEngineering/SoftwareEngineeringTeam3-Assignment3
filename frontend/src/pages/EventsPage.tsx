@@ -20,7 +20,7 @@ import { CircleMarker, MapContainer, Polygon, TileLayer, Tooltip, useMap } from 
 import { departmentResources as staticDepartmentResources } from '../data/departments'
 import { hammondCampusConfig } from '../data/hammond/campusConfig'
 import { hammondFeatures } from '../data/hammond/features'
-import type { DemoAccount } from '../models/auth'
+import type { PublicDemoAccount } from '../models/auth'
 import type { CampusFeature } from '../models/campus'
 import type {
   CampusEvent,
@@ -46,7 +46,7 @@ type EventsTab = 'events' | 'departments'
 type CategoryFilter = EventCategory | 'all'
 
 interface EventsPageProps {
-  currentUser: DemoAccount | null
+  currentUser: PublicDemoAccount | null
   onBackToMap: () => void
   onSignOut: () => void
   onOpenAssistant: () => void
@@ -517,7 +517,7 @@ export function EventsPage({
         .filter((event) => hasJoinedCampusEvent(event.eventId, currentUser))
         .map((event) => event.eventId),
     )
-  }, [currentUser, events, registrationCounts])
+  }, [currentUser, events])
 
   const departmentSuggestions = useMemo(() => {
     const suggestions = new Set<string>()

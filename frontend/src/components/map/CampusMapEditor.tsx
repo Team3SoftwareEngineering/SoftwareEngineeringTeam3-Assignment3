@@ -16,6 +16,25 @@ import "leaflet-draw";
 
 import { hammondFeatures } from "../../data/hammond/features";
 
+type DrawControlCtor = new (options: {
+    draw: false;
+    edit: {
+        featureGroup: L.FeatureGroup;
+        remove: boolean;
+    };
+}) => L.Control;
+
+type LeafletControlWithDraw = typeof L.Control & { Draw?: DrawControlCtor };
+type LeafletWithDraw = typeof L & { Draw?: { Event: { EDITED: string } } };
+
+type DrawLayerWithFeatureId = L.Layer & {
+    options: L.PathOptions & { featureId?: string };
+};
+
+type DrawEditedEvent = L.LeafletEvent & {
+    layers: L.LayerGroup;
+};
+
 function DrawControls({
                           featureGroupRef,
                           updatePolygon,
@@ -28,7 +47,11 @@ function DrawControls({
     useEffect(() => {
         if (!featureGroupRef.current) return;
 
-        const drawControl = new (L.Control as any).Draw({
+        const drawControlCtor = (L.Control as LeafletControlWithDraw).Draw;
+        const drawNamespace = (L as LeafletWithDraw).Draw;
+        if (!drawControlCtor || !drawNamespace?.Event?.EDITED) return;
+
+        const drawControl = new drawControlCtor({
             draw: false,
             edit: {
                 featureGroup: featureGroupRef.current,
@@ -38,9 +61,10 @@ function DrawControls({
 
         map.addControl(drawControl);
 
-        const handleEdited = (e: any) => {
-            e.layers.eachLayer((layer: any) => {
-                const featureId = (layer.options as any).featureId;
+        const handleEdited = (event: DrawEditedEvent) => {
+            event.layers.eachLayer((layer: L.Layer) => {
+                const editableLayer = layer as DrawLayerWithFeatureId;
+                const featureId = editableLayer.options.featureId;
                 if (!featureId) return;
 
                 if (layer instanceof L.Polygon) {
@@ -56,10 +80,11 @@ function DrawControls({
             });
         };
 
-        map.on((L as any).Draw.Event.EDITED, handleEdited);
+        const editedEventName = drawNamespace.Event.EDITED;
+        map.on(editedEventName, handleEdited as L.LeafletEventHandlerFn);
 
         return () => {
-            map.off((L as any).Draw.Event.EDITED, handleEdited);
+            map.off(editedEventName, handleEdited as L.LeafletEventHandlerFn);
             map.removeControl(drawControl);
         };
     }, [map, featureGroupRef, updatePolygon]);
@@ -131,7 +156,8 @@ export default function CampusMapEditor() {
                                 }}
                                 ref={(layer) => {
                                     if (layer) {
-                                        (layer.options as any).featureId = feature.id;
+                                        const editableLayer = layer as DrawLayerWithFeatureId;
+                                        editableLayer.options.featureId = feature.id;
                                     }
                                 }}
                             >

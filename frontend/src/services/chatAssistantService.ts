@@ -1,4 +1,4 @@
-import type { DemoAccount } from '../models/auth'
+import type { PublicDemoAccount } from '../models/auth'
 import type {
   AssistantEventCard,
   AssistantIntent,
@@ -73,15 +73,28 @@ interface BackendParkingResponse {
 }
 
 export interface SendCampusAssistantQueryOptions {
-  currentUser?: DemoAccount | null
+  currentUser?: PublicDemoAccount | null
+}
+
+let fallbackIdCounter = 0
+
+function createSecureRandomHex(byteLength = 16) {
+  if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+    const bytes = new Uint8Array(byteLength)
+    crypto.getRandomValues(bytes)
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('')
+  }
+
+  fallbackIdCounter += 1
+  return `${Date.now().toString(16)}${fallbackIdCounter.toString(16).padStart(4, '0')}`
 }
 
 function createId(prefix: string) {
-  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return `${prefix}-${crypto.randomUUID()}`
   }
 
-  return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`
+  return `${prefix}-${createSecureRandomHex()}`
 }
 
 function normalize(value: string) {
@@ -718,7 +731,7 @@ function registrationSuggestions(events: CampusEvent[]): AssistantSuggestion[] {
 
 async function buildRegistrationPayload(
   route: AssistantRouteResult,
-  currentUser: DemoAccount | null,
+  currentUser: PublicDemoAccount | null,
 ): Promise<AssistantResponsePayload> {
   const eventName = asString(route.parameters?.event_name)
   const events = await getCampusEvents()

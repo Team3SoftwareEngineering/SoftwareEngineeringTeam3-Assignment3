@@ -3,7 +3,7 @@ import { AppShell } from './AppShell'
 import { AuthPage } from '../pages/AuthPage'
 import { CampusAssistantPage } from '../pages/CampusAssistantPage'
 import { EventsPage } from '../pages/EventsPage'
-import type { DemoAccount } from '../models/auth'
+import type { PublicDemoAccount } from '../models/auth'
 import type { AssistantCardActionPayload } from '../models/chatAssistant'
 import type { CampusEvent } from '../models/event'
 import { clearCurrentSession, getCurrentSession } from '../services/authService'
@@ -19,7 +19,7 @@ function normalize(value: string) {
 }
 
 export function App() {
-  const [session, setSession] = useState<DemoAccount | null>(() => getCurrentSession())
+  const [session, setSession] = useState<PublicDemoAccount | null>(() => getCurrentSession())
   const features = useMapStore((state) => state.features)
   const requestFeatureFocus = useMapStore((state) => state.requestFeatureFocus)
   const setRouteDestination = useMapStore((state) => state.setRouteDestination)
@@ -29,7 +29,7 @@ export function App() {
     return getCurrentSession() ? 'events' : 'auth'
   })
 
-  function handleAuthenticated(account: DemoAccount) {
+  function handleAuthenticated(account: PublicDemoAccount) {
     setSession(account)
     setView('events')
   }

@@ -21,7 +21,7 @@ import {
   Zap,
 } from 'lucide-react'
 import { quickPrompts, supportedIntents } from '../data/chatAssistant'
-import type { DemoAccount } from '../models/auth'
+import type { PublicDemoAccount } from '../models/auth'
 import type {
   AssistantBotMessage,
   AssistantCardActionPayload,
@@ -35,7 +35,7 @@ import type {
 import { sendCampusAssistantQuery } from '../services/chatAssistantService'
 
 interface CampusAssistantPageProps {
-  currentUser: DemoAccount | null
+  currentUser: PublicDemoAccount | null
   onBackToMap: () => void
   onBackToEvents?: () => void
   onSignOut?: () => void
@@ -53,12 +53,25 @@ const intentLabelMap: Record<AssistantIntent, string> = {
   unknown: 'Unknown',
 }
 
+let fallbackIdCounter = 0
+
+function createSecureRandomHex(byteLength = 16) {
+  if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+    const bytes = new Uint8Array(byteLength)
+    crypto.getRandomValues(bytes)
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('')
+  }
+
+  fallbackIdCounter += 1
+  return `${Date.now().toString(16)}${fallbackIdCounter.toString(16).padStart(4, '0')}`
+}
+
 function createId(prefix: string) {
-  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return `${prefix}-${crypto.randomUUID()}`
   }
 
-  return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`
+  return `${prefix}-${createSecureRandomHex()}`
 }
 
 function makeUserMessage(query: string): AssistantUserMessage {
@@ -79,65 +92,63 @@ function makeBotMessage(payload: AssistantResponsePayload): AssistantBotMessage 
   }
 }
 
-function getIntentIcon(intent: AssistantIntent) {
+function renderIntentIcon(intent: AssistantIntent, className: string) {
   switch (intent) {
     case 'event_lookup':
-      return CalendarDays
+      return <CalendarDays className={className} />
     case 'location_lookup':
-      return MapPin
+      return <MapPin className={className} />
     case 'parking_lookup':
-      return ParkingCircle
+      return <ParkingCircle className={className} />
     case 'event_registration':
-      return Users
+      return <Users className={className} />
     case 'resource_lookup':
-      return Search
+      return <Search className={className} />
     default:
-      return CircleHelp
+      return <CircleHelp className={className} />
   }
 }
 
-function getSupportedIntentIcon(intent: AssistantIntent) {
+function renderSupportedIntentIcon(intent: AssistantIntent, className: string) {
   switch (intent) {
     case 'event_lookup':
-      return CalendarDays
+      return <CalendarDays className={className} />
     case 'parking_lookup':
-      return ParkingCircle
+      return <ParkingCircle className={className} />
     case 'location_lookup':
-      return MapPin
+      return <MapPin className={className} />
     case 'event_registration':
-      return Users
+      return <Users className={className} />
     case 'resource_lookup':
-      return WalletCards
+      return <WalletCards className={className} />
     default:
-      return CircleHelp
+      return <CircleHelp className={className} />
   }
 }
 
 function AssistantBadge({ intent, label }: { intent: AssistantIntent; label: string }) {
-  const Icon = getIntentIcon(intent)
-
   return (
     <span className="inline-flex items-center gap-2 rounded-full border border-accent-gold/25 bg-accent-gold-soft/70 px-3 py-1 text-xs font-bold tracking-wide text-[#72510a]">
-      <Icon className="h-3.5 w-3.5" />
+      {renderIntentIcon(intent, 'h-3.5 w-3.5')}
       {label}
     </span>
   )
 }
 
-function renderCardIcon(kind: AssistantResultCard['kind']) {
+function renderCardIcon(kind: AssistantResultCard['kind'], className: string) {
   switch (kind) {
     case 'event':
-      return CalendarDays
+      return <CalendarDays className={className} />
     case 'location':
-      return MapPin
+      return <MapPin className={className} />
     case 'parking':
-      return ParkingCircle
+      return <ParkingCircle className={className} />
     case 'registration':
-      return Users
+      return <Users className={className} />
     case 'resource':
-      return WalletCards
+      return <WalletCards className={className} />
     default:
-      return CircleHelp
+      return <CircleHelp className={className} />
   }
 }
 
@@ -386,13 +397,11 @@ function NoticeResultCard({
 }: {
   card: Extract<AssistantResultCard, { kind: 'notice' }>
 }) {
-  const Icon = renderCardIcon(card.kind)
-
   return (
     <article className="rounded-card border border-slate-300/80 bg-white p-4 shadow-panelSm">
       <div className="flex items-start gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-control border border-accent-navy/15 bg-accent-navy-soft/60 text-accent-navy">
-          <Icon className="h-4 w-4" />
+          {renderCardIcon(card.kind, 'h-4 w-4')}
         </div>
 
         <div>
@@ -708,13 +717,12 @@ export function CampusAssistantPage({
               <p className="text-sm font-semibold text-text-primary">Supported intents</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {supportedIntents.map((item) => {
-                  const Icon = getSupportedIntentIcon(item.intent)
                   return (
                     <span
                       key={item.intent}
                       className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-surface-muted px-3 py-2 text-sm font-medium text-text-secondary"
                     >
-                      <Icon className="h-4 w-4 text-accent-navy" />
+                      {renderSupportedIntentIcon(item.intent, 'h-4 w-4 text-accent-navy')}
                       {item.label}
                     </span>
                   )

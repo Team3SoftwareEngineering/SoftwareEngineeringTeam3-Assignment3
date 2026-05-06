@@ -60,6 +60,11 @@ export function AutocompleteField({
       .slice(0, 8)
   }, [options, value])
 
+  const clampedActiveIndex =
+    filteredOptions.length > 0
+      ? Math.min(activeIndex, filteredOptions.length - 1)
+      : -1
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (!containerRef.current?.contains(event.target as Node)) {
@@ -71,14 +76,6 @@ export function AutocompleteField({
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
-
-  useEffect(() => {
-    setActiveIndex((current) => {
-      if (!filteredOptions.length) return -1
-      if (current >= filteredOptions.length) return filteredOptions.length - 1
-      return current
-    })
-  }, [filteredOptions])
 
   function selectOption(option: string) {
     onChange(option)
@@ -98,23 +95,35 @@ export function AutocompleteField({
     if (event.key === 'ArrowDown') {
       event.preventDefault()
       setIsOpen(true)
-      setActiveIndex((current) =>
-        current < filteredOptions.length - 1 ? current + 1 : 0,
-      )
+      setActiveIndex((current) => {
+        const normalizedCurrent =
+          filteredOptions.length > 0
+            ? Math.min(current, filteredOptions.length - 1)
+            : -1
+        return normalizedCurrent < filteredOptions.length - 1
+          ? normalizedCurrent + 1
+          : 0
+      })
     }
 
     if (event.key === 'ArrowUp') {
       event.preventDefault()
       setIsOpen(true)
-      setActiveIndex((current) =>
-        current > 0 ? current - 1 : filteredOptions.length - 1,
-      )
+      setActiveIndex((current) => {
+        const normalizedCurrent =
+          filteredOptions.length > 0
+            ? Math.min(current, filteredOptions.length - 1)
+            : -1
+        return normalizedCurrent > 0
+          ? normalizedCurrent - 1
+          : filteredOptions.length - 1
+      })
     }
 
     if (event.key === 'Enter' && isOpen) {
       event.preventDefault()
-      if (activeIndex >= 0) {
-        selectOption(filteredOptions[activeIndex])
+      if (clampedActiveIndex >= 0) {
+        selectOption(filteredOptions[clampedActiveIndex])
       } else if (filteredOptions.length === 1) {
         selectOption(filteredOptions[0])
       }
@@ -176,7 +185,7 @@ export function AutocompleteField({
           >
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option, index) => {
-                const isActive = index === activeIndex
+                const isActive = index === clampedActiveIndex
                 const isSelected = option === value
 
                 return (

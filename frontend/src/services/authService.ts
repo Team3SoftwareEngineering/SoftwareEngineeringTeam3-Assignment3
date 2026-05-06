@@ -1,4 +1,10 @@
-import type { AuthResult, DemoAccount, LoginPayload, SignupPayload } from '../models/auth'
+import type {
+  AuthResult,
+  DemoAccount,
+  LoginPayload,
+  PublicDemoAccount,
+  SignupPayload,
+} from '../models/auth'
 
 const ACCOUNTS_STORAGE_KEY = 'pnw_demo_accounts'
 const SESSION_STORAGE_KEY = 'pnw_current_session'
@@ -17,16 +23,80 @@ function canUseStorage() {
   }
 }
 
-function createUuid() {
-  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-    return crypto.randomUUID()
+let fallbackIdCounter = 0
+
+function createSecureRandomHex(byteLength = 16) {
+  if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+    const bytes = new Uint8Array(byteLength)
+    crypto.getRandomValues(bytes)
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('')
   }
 
-  return `demo-${Date.now()}-${Math.random().toString(16).slice(2)}`
+  fallbackIdCounter += 1
+  return `${Date.now().toString(16)}${fallbackIdCounter.toString(16).padStart(4, '0')}`
+}
+
+function createUuid() {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return `demo-${crypto.randomUUID()}`
+  }
+
+  return `demo-${createSecureRandomHex()}`
 }
 
 function demoHashPassword(password: string) {
   return `demo_hash_${btoa(password)}`
+}
+
+function toPublicAccount(account: DemoAccount): PublicDemoAccount {
+  return {
+    accountUuid: account.accountUuid,
+    username: account.username,
+    role: account.role,
+    firstName: account.firstName,
+    middleName: account.middleName,
+    lastName: account.lastName,
+    idNumber: account.idNumber,
+    city: account.city,
+    state: account.state,
+    createdAt: account.createdAt,
+  }
+}
+
+function toPublicAccountFromUnknown(value: unknown): PublicDemoAccount | null {
+  if (!value || typeof value !== 'object') return null
+
+  const candidate = value as Partial<DemoAccount>
+  if (
+    typeof candidate.accountUuid !== 'string' ||
+    typeof candidate.username !== 'string' ||
+    (candidate.role !== 'student' && candidate.role !== 'staff') ||
+    typeof candidate.firstName !== 'string' ||
+    typeof candidate.lastName !== 'string' ||
+    typeof candidate.idNumber !== 'string' ||
+    typeof candidate.city !== 'string' ||
+    typeof candidate.state !== 'string' ||
+    typeof candidate.createdAt !== 'string'
+  ) {
+    return null
+  }
+
+  if (candidate.middleName !== undefined && typeof candidate.middleName !== 'string') {
+    return null
+  }
+
+  return {
+    accountUuid: candidate.accountUuid,
+    username: candidate.username,
+    role: candidate.role,
+    firstName: candidate.firstName,
+    middleName: candidate.middleName,
+    lastName: candidate.lastName,
+    idNumber: candidate.idNumber,
+    city: candidate.city,
+    state: candidate.state,
+    createdAt: candidate.createdAt,
+  }
 }
 
 const seedAccounts: DemoAccount[] = [
@@ -67,17 +137,19 @@ export function getAllAccounts() {
   return [...seedAccounts, ...getStoredAccounts()]
 }
 
-export function saveCurrentSession(account: DemoAccount) {
+export function saveCurrentSession(account: PublicDemoAccount) {
   if (!canUseStorage()) return
   localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(account))
 }
 
-export function getCurrentSession(): DemoAccount | null {
+export function getCurrentSession(): PublicDemoAccount | null {
   if (!canUseStorage()) return null
 
   try {
     const rawSession = localStorage.getItem(SESSION_STORAGE_KEY)
-    return rawSession ? JSON.parse(rawSession) : null
+    if (!rawSession) return null
+
+    return toPublicAccountFromUnknown(JSON.parse(rawSession))
   } catch {
     return null
   }
@@ -112,12 +184,13 @@ export function loginUser(payload: LoginPayload): AuthResult {
     }
   }
 
-  saveCurrentSession(matchingAccount)
+  const sessionAccount = toPublicAccount(matchingAccount)
+  saveCurrentSession(sessionAccount)
 
   return {
     ok: true,
     message: `Welcome back, ${matchingAccount.firstName}.`,
-    account: matchingAccount,
+    account: sessionAccount,
   }
 }
 
@@ -217,11 +290,12 @@ export function signupUser(payload: SignupPayload): AuthResult {
 
   const storedAccounts = getStoredAccounts()
   saveStoredAccounts([...storedAccounts, newAccount])
-  saveCurrentSession(newAccount)
+  const sessionAccount = toPublicAccount(newAccount)
+  saveCurrentSession(sessionAccount)
 
   return {
     ok: true,
     message: `Account created for ${firstName} ${lastName}.`,
-    account: newAccount,
+    account: sessionAccount,
   }
 }
