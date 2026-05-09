@@ -80,8 +80,10 @@ docker compose up --build
   -> schema/seed SQL files initialize database
   -> mysql healthcheck passes
   -> backend container starts with DB_HOST=mysql
-  -> frontend container starts with VITE_API_BASE_URL=http://localhost:3000/api
+  -> frontend container starts with VITE_API_BASE_URL=http://localhost:3000/api (host-browser API access)
 ```
+
+The `localhost` API URL above is intended for browser-originated requests during local development. Internal container networking still uses Docker service names (for example, backend to MySQL uses `mysql`).
 
 ## Deployment Shape
 

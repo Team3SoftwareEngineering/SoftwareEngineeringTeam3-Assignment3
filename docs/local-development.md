@@ -32,6 +32,8 @@ cp .env.example .env
 
 Use this path when you need consistent frontend + backend + database behavior and shared reproducibility across teammates.
 
+For this Vite setup, API calls are browser-originated, so `VITE_API_BASE_URL=http://localhost:3000/api` is correct for local development from your host browser.
+
 ## Run Without Docker
 
 Start the frontend:
@@ -79,8 +81,8 @@ docker compose up --build
 
 | Symptom | What to check |
 | --- | --- |
-| Frontend cannot reach backend API | Confirm `VITE_API_BASE_URL=http://localhost:3000/api` in `.env` and ensure backend is running on `3000`. |
+| Frontend cannot reach backend API | Confirm `VITE_API_BASE_URL=http://localhost:3000/api` in `.env` and ensure backend is running on `3000`; this URL is for browser access on the host machine. |
 | Backend cannot connect to database in Docker | Backend container should use `DB_HOST=mysql`; this is set by `docker-compose.yml`. |
 | Backend cannot connect to database outside Docker | Use `DB_HOST=localhost` in `.env` for host-run backend processes. |
-| Port 3306 already in use | Start with a different host mapping, for example `DB_PORT=3308 docker compose up --build`. |
+| Port 3306 already in use | Start with a different host mapping, for example `DB_PORT=3308 docker compose up --build`; `docker-compose.yml` already maps `${DB_PORT:-3306}:3306`. |
 | Frontend or backend port conflict | Override `FRONTEND_PORT` or `BACKEND_PORT` in `.env`, then restart compose. |
