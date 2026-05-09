@@ -392,3 +392,7 @@ Do not commit real credentials, local virtual environments, dependency folders, 
 - Backend tests live under `backend/src/tests` and are run separately with `pytest`.
 - API contracts and architecture notes live in `docs/`.
 - Database schema changes should be made in `database/init/01_schema.sql` and reflected in repository classes under `backend/src/repositories`.
+
+## Contributors
+
+- Copilot Task Agent — Documentation (Ubuntu + Docker development and architecture docs)

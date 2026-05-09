@@ -4,6 +4,22 @@
 
 The project is a full-stack campus wayfinding application split into frontend, backend, and database workspaces. Docker Compose can run the complete local stack, while each workspace can also be developed independently.
 
+## Docker Orchestration In This Architecture
+
+`docker-compose.yml` defines three runtime services and how they coordinate:
+
+- `mysql` provides persistent relational storage and boot-time schema/seed initialization.
+- `backend` exposes Flask APIs on port `3000` and depends on healthy MySQL before startup.
+- `frontend` serves the Vite app on port `5173` and depends on backend availability.
+
+This preserves clear runtime boundaries:
+
+- Frontend should only communicate with backend API endpoints.
+- Backend owns business logic, validation, and database access.
+- MySQL is not accessed directly by frontend code.
+
+For local development, this gives teams a reproducible stack while still allowing independent workspace iteration when full orchestration is unnecessary.
+
 ## Frontend
 
 `frontend/` contains the React + TypeScript + Vite application. It owns the interactive map, event pages, campus assistant UI, routing panel, authentication screens, and resource hub.
@@ -55,6 +71,17 @@ Browser
 ```
 
 For map and resource continuity, the frontend can fall back to curated local data when the backend is unreachable.
+
+## Compose Runtime Flow
+
+```text
+docker compose up --build
+  -> mysql container starts
+  -> schema/seed SQL files initialize database
+  -> mysql healthcheck passes
+  -> backend container starts with DB_HOST=mysql
+  -> frontend container starts with VITE_API_BASE_URL=http://localhost:3000/api
+```
 
 ## Deployment Shape
 
